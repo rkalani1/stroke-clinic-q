@@ -37,7 +37,8 @@
                 radial-gradient(circle at 85% 5%, rgba(15, 107, 107, 0.14), transparent 45%),
                 linear-gradient(120deg, #f6f1e8 0%, #eef4f3 100%);
             min-height: 100vh;
-            line-height: 1.6;
+            font-size: 18px;
+            line-height: 1.7;
         }
 
         .page {
@@ -92,7 +93,7 @@
 
         .hero p {
             max-width: 640px;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: rgba(255, 255, 255, 0.9);
         }
 
@@ -141,7 +142,84 @@
         .form-stack {
             display: grid;
             gap: 22px;
-            counter-reset: step;
+        }
+
+        .form-step {
+            display: none;
+            gap: 22px;
+            counter-reset: section;
+        }
+
+        .form-step.active {
+            display: grid;
+        }
+
+        .helper-card {
+            padding: 20px;
+            display: grid;
+            gap: 12px;
+            background: var(--panel-alt);
+        }
+
+        .helper-title {
+            font-weight: 600;
+            font-size: 1.02rem;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--ink);
+            margin: 0;
+        }
+
+        .toggle-row input {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--accent);
+        }
+
+        .stepper {
+            padding: 16px 18px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .stepper-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .step-label {
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-size: 0.72rem;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--outline);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+            transition: width 0.3s ease;
         }
 
         .section {
@@ -162,8 +240,8 @@
         }
 
         .section-title::before {
-            counter-increment: step;
-            content: counter(step, decimal-leading-zero);
+            counter-increment: section;
+            content: counter(section, decimal-leading-zero);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -196,6 +274,18 @@
             margin-bottom: 12px;
         }
 
+        .step-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .step-actions .btn {
+            min-width: 160px;
+        }
+
         @keyframes rise {
             to {
                 opacity: 1;
@@ -226,7 +316,7 @@
         textarea,
         select {
             width: 100%;
-            padding: 12px 14px;
+            padding: 14px 16px;
             border: 1px solid var(--outline);
             border-radius: 12px;
             font-size: 1rem;
@@ -251,7 +341,7 @@
         }
 
         .helper-text {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--muted);
             margin-top: 6px;
         }
@@ -271,7 +361,7 @@
         }
 
         .btn {
-            padding: 12px 20px;
+            padding: 14px 24px;
             border: 1px solid transparent;
             border-radius: 999px;
             font-size: 1rem;
@@ -289,6 +379,13 @@
         .btn-primary:hover {
             background: var(--accent-strong);
             transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
 
         .btn-secondary {
@@ -312,8 +409,8 @@
         }
 
         .btn-small {
-            padding: 8px 14px;
-            font-size: 0.9rem;
+            padding: 10px 16px;
+            font-size: 0.95rem;
         }
 
         .btn-remove {
@@ -353,7 +450,7 @@
         .radio-group {
             display: inline-flex;
             gap: 8px;
-            padding: 6px;
+            padding: 8px;
             border-radius: 999px;
             background: var(--panel-alt);
             border: 1px solid var(--outline);
@@ -373,7 +470,7 @@
 
         .radio-option label {
             margin: 0;
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 999px;
             font-weight: 600;
             color: var(--muted);
@@ -409,45 +506,32 @@
             opacity: 1;
         }
 
-        .checkbox-group {
+        .question-grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        .question-card {
             display: grid;
             gap: 12px;
-        }
-
-        .checkbox-option {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            padding: 12px;
-            border-radius: 12px;
+            padding: 16px;
+            border-radius: 14px;
             border: 1px solid var(--outline);
             background: #fff;
-            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-        .checkbox-option:hover,
-        .checkbox-option:focus-within {
+        .question-card:focus-within {
             border-color: var(--accent);
             box-shadow: 0 0 0 3px var(--accent-soft);
         }
 
-        .checkbox-option input {
-            margin-top: 2px;
-            width: 20px;
-            height: 20px;
-            accent-color: var(--accent);
+        .question-card p {
+            margin: 0;
+            font-weight: 600;
         }
 
-        .submit-card {
-            padding: 24px;
-            text-align: center;
-            border-style: dashed;
-            background: var(--panel-alt);
-        }
-
-        .submit-card p {
-            color: var(--muted);
-            margin-bottom: 16px;
+        .question-card .radio-group {
+            margin-bottom: 0;
         }
 
         .result-container {
@@ -483,8 +567,8 @@
             border-radius: 12px;
             padding: 16px;
             white-space: pre-wrap;
-            font-size: 0.95rem;
-            line-height: 1.6;
+            font-size: 1rem;
+            line-height: 1.7;
             max-height: 420px;
             overflow-y: auto;
         }
@@ -532,6 +616,15 @@
                 grid-template-columns: 1fr;
             }
 
+            .step-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .step-actions .btn {
+                width: 100%;
+            }
+
             .hero {
                 padding: 54px 18px 76px;
             }
@@ -552,7 +645,7 @@
             <div class="hero-inner">
                 <span class="hero-tag">UW Medicine / Harborview Medical Center</span>
                 <h1>Stroke Clinic Pre-Visit Questionnaire</h1>
-                <p>Fill in the details below and generate a MyChart-ready message you can copy and paste.</p>
+                <p>Fill this out at your pace. You can skip any question or choose Not sure, then generate a MyChart-ready message.</p>
                 <div class="hero-meta">
                     <span class="hero-chip">Estimated time: 5 to 7 minutes</span>
                 </div>
@@ -562,270 +655,451 @@
         <main class="container">
             <div class="layout">
                 <form id="questionnaireForm" class="form-stack">
-                    <section class="section card" style="--delay: 0ms;">
-                        <h2 class="section-title">Primary care information</h2>
-                        <div class="form-group">
-                            <label for="pcpName">Primary care doctor name</label>
-                            <input type="text" id="pcpName" placeholder="Dr. Jane Smith">
+                    <div class="card helper-card">
+                        <div>
+                            <p class="helper-title">Take your time. You can skip any question or choose Not sure.</p>
+                            <p class="helper-text">If you are filling this out for someone else, turn on caregiver mode.</p>
                         </div>
-                    </section>
+                        <label class="toggle-row">
+                            <input type="checkbox" id="caregiverMode">
+                            <span>Caregiver mode: I am filling this out for someone else</span>
+                        </label>
+                    </div>
 
-                    <section class="section card" style="--delay: 60ms;">
-                        <h2 class="section-title">Current medications and supplements</h2>
-                        <div id="medicationsContainer">
-                            <div class="medication-entry">
-                                <div class="medication-input">
-                                    <input type="text" class="med-name" placeholder="Medication name (e.g., atorvastatin)">
-                                    <input type="text" class="med-dose" placeholder="Dose (e.g., 40 mg daily)">
-                                </div>
-                            </div>
+                    <div class="card stepper" aria-live="polite">
+                        <div class="stepper-header">
+                            <span id="stepLabel" class="step-label">Step 1 of 5</span>
+                            <span id="stepTitle" class="step-title">Primary care and medicines</span>
                         </div>
-                        <button type="button" class="btn btn-secondary btn-small" onclick="addMedication()">+ Add another medication</button>
-                    </section>
-
-                    <section class="section card" style="--delay: 120ms;">
-                        <h2 class="section-title">Home blood pressure (past week)</h2>
-                        <div class="bp-inputs">
-                            <div class="bp-group">
-                                <label>Systolic (top number)</label>
-                                <div class="bp-row">
-                                    <input type="number" id="bpSystolicMin" placeholder="Min" min="60" max="250">
-                                    <span class="bp-separator">to</span>
-                                    <input type="number" id="bpSystolicMax" placeholder="Max" min="60" max="250">
-                                </div>
-                            </div>
-                            <div class="bp-group">
-                                <label>Diastolic (bottom number)</label>
-                                <div class="bp-row">
-                                    <input type="number" id="bpDiastolicMin" placeholder="Min" min="40" max="150">
-                                    <span class="bp-separator">to</span>
-                                    <input type="number" id="bpDiastolicMax" placeholder="Max" min="40" max="150">
-                                </div>
-                            </div>
+                        <div class="progress-bar">
+                            <div id="progressFill" class="progress-bar-fill"></div>
                         </div>
-                        <p class="helper-text">Enter the range of your blood pressure readings over the past week.</p>
-                    </section>
+                    </div>
 
-                    <section class="section card" style="--delay: 180ms;">
-                        <h2 class="section-title">Substance use and exposure</h2>
-
-                        <div class="subsection">
-                            <h3 class="subsection-title">Tobacco</h3>
+                    <div class="form-step active" data-step-title="Primary care and medicines">
+                        <section class="section card" style="--delay: 0ms;">
+                            <h2 class="section-title">Primary care</h2>
                             <div class="form-group">
-                                <label>Do you currently use tobacco?</label>
-                                <div class="radio-group">
-                                    <div class="radio-option">
-                                        <input type="radio" id="tobaccoCurrentYes" name="tobaccoCurrent" value="yes" onchange="toggleConditional('tobaccoCurrentFields', true)">
-                                        <label for="tobaccoCurrentYes">Yes</label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="tobaccoCurrentNo" name="tobaccoCurrent" value="no" onchange="toggleConditional('tobaccoCurrentFields', false)">
-                                        <label for="tobaccoCurrentNo">No</label>
-                                    </div>
-                                </div>
-                                <div id="tobaccoCurrentFields" class="conditional-fields">
-                                    <div class="form-group">
-                                        <label for="tobaccoType">Type of tobacco</label>
-                                        <input type="text" id="tobaccoType" placeholder="e.g., cigarettes, cigars, chewing tobacco">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tobaccoAmount">Amount per day</label>
-                                        <input type="text" id="tobaccoAmount" placeholder="e.g., 1 pack, 5 cigarettes">
-                                    </div>
-                                </div>
+                                <label for="pcpName">Primary care doctor (if you have one)</label>
+                                <input type="text" id="pcpName" placeholder="Dr. Jane Smith">
                             </div>
+                        </section>
 
-                            <div class="form-group">
-                                <label>Have you used tobacco in the past?</label>
-                                <div class="radio-group">
-                                    <div class="radio-option">
-                                        <input type="radio" id="tobaccoPriorYes" name="tobaccoPrior" value="yes" onchange="toggleConditional('tobaccoPriorFields', true)">
-                                        <label for="tobaccoPriorYes">Yes</label>
+                        <section class="section card" style="--delay: 60ms;">
+                            <h2 class="section-title">Medicines and supplements</h2>
+                            <div id="medicationsContainer">
+                                <div class="medication-entry">
+                                    <div class="medication-input">
+                                        <input type="text" class="med-name" placeholder="Medicine name (example: atorvastatin)">
+                                        <input type="text" class="med-dose" placeholder="Dose (example: 40 mg once daily)">
                                     </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="tobaccoPriorNo" name="tobaccoPrior" value="no" onchange="toggleConditional('tobaccoPriorFields', false)">
-                                        <label for="tobaccoPriorNo">No</label>
-                                    </div>
-                                </div>
-                                <div id="tobaccoPriorFields" class="conditional-fields">
-                                    <div class="form-group">
-                                        <label for="tobaccoPriorYears">Total years used</label>
-                                        <input type="number" id="tobaccoPriorYears" placeholder="e.g., 15" min="0" oninput="calculatePackYears()">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tobaccoPriorPacks">Packs per day (for cigarettes)</label>
-                                        <input type="number" id="tobaccoPriorPacks" placeholder="e.g., 1.5" min="0" step="0.1" oninput="calculatePackYears()">
-                                    </div>
-                                    <div id="packYearsDisplay" class="pack-years-display" style="display: none;"></div>
                                 </div>
                             </div>
+                            <button type="button" class="btn btn-secondary btn-small" onclick="addMedication()">+ Add another medicine</button>
+                            <p class="helper-text">Include prescriptions, over-the-counter medicines, and vitamins.</p>
+                        </section>
+
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
+                            <button type="button" class="btn btn-primary" data-action="next-step" onclick="nextStep()">Next</button>
                         </div>
+                    </div>
 
-                        <div class="subsection">
-                            <h3 class="subsection-title">Alcohol</h3>
-                            <div class="form-group">
-                                <label>Do you currently use alcohol?</label>
-                                <div class="radio-group">
-                                    <div class="radio-option">
-                                        <input type="radio" id="alcoholCurrentYes" name="alcoholCurrent" value="yes" onchange="toggleConditional('alcoholCurrentFields', true)">
-                                        <label for="alcoholCurrentYes">Yes</label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="alcoholCurrentNo" name="alcoholCurrent" value="no" onchange="toggleConditional('alcoholCurrentFields', false)">
-                                        <label for="alcoholCurrentNo">No</label>
+                    <div class="form-step" data-step-title="Home blood pressure">
+                        <section class="section card" style="--delay: 0ms;">
+                            <h2 class="section-title">Home blood pressure in the last week</h2>
+                            <div class="bp-inputs">
+                                <div class="bp-group">
+                                    <label>Top number (systolic)</label>
+                                    <div class="bp-row">
+                                        <input type="number" id="bpSystolicMin" placeholder="Lowest" min="60" max="250">
+                                        <span class="bp-separator">to</span>
+                                        <input type="number" id="bpSystolicMax" placeholder="Highest" min="60" max="250">
                                     </div>
                                 </div>
-                                <div id="alcoholCurrentFields" class="conditional-fields">
-                                    <div class="form-group">
-                                        <label for="alcoholType">Type of alcohol</label>
-                                        <input type="text" id="alcoholType" placeholder="e.g., beer, wine, liquor">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="alcoholDrinks">Average drinks per week</label>
-                                        <input type="number" id="alcoholDrinks" placeholder="e.g., 5" min="0">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="alcoholYears">Years of use</label>
-                                        <input type="number" id="alcoholYears" placeholder="e.g., 10" min="0">
+                                <div class="bp-group">
+                                    <label>Bottom number (diastolic)</label>
+                                    <div class="bp-row">
+                                        <input type="number" id="bpDiastolicMin" placeholder="Lowest" min="40" max="150">
+                                        <span class="bp-separator">to</span>
+                                        <input type="number" id="bpDiastolicMax" placeholder="Highest" min="40" max="150">
                                     </div>
                                 </div>
                             </div>
+                            <p class="helper-text">If you check at home, enter the lowest and highest readings you saw.</p>
+                        </section>
 
-                            <div class="form-group">
-                                <label>Have you used alcohol in the past?</label>
-                                <div class="radio-group">
-                                    <div class="radio-option">
-                                        <input type="radio" id="alcoholPriorYes" name="alcoholPrior" value="yes" onchange="toggleConditional('alcoholPriorFields', true)">
-                                        <label for="alcoholPriorYes">Yes</label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="alcoholPriorNo" name="alcoholPrior" value="no" onchange="toggleConditional('alcoholPriorFields', false)">
-                                        <label for="alcoholPriorNo">No</label>
-                                    </div>
-                                </div>
-                                <div id="alcoholPriorFields" class="conditional-fields">
-                                    <div class="form-group">
-                                        <label for="alcoholPriorType">Type of alcohol</label>
-                                        <input type="text" id="alcoholPriorType" placeholder="e.g., beer, wine, liquor">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="alcoholPriorDuration">Duration and amount</label>
-                                        <input type="text" id="alcoholPriorDuration" placeholder="e.g., 15 years, ~10 drinks/week">
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
+                            <button type="button" class="btn btn-primary" data-action="next-step" onclick="nextStep()">Next</button>
                         </div>
+                    </div>
 
-                        <div class="subsection">
-                            <h3 class="subsection-title">Illicit drugs</h3>
+                    <div class="form-step" data-step-title="Substance use">
+                        <section class="section card" style="--delay: 0ms;">
+                            <h2 class="section-title">Substance use and exposure</h2>
+                            <p class="helper-text">Answer what you can. If you are not sure, choose Not sure.</p>
+
+                            <div class="subsection">
+                                <h3 class="subsection-title">Tobacco</h3>
+                                <div class="form-group">
+                                    <label>Do you use tobacco now?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="tobaccoCurrentYes" name="tobaccoCurrent" value="yes" onchange="toggleConditional('tobaccoCurrentFields', true)">
+                                            <label for="tobaccoCurrentYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="tobaccoCurrentNo" name="tobaccoCurrent" value="no" onchange="toggleConditional('tobaccoCurrentFields', false)">
+                                            <label for="tobaccoCurrentNo">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="tobaccoCurrentUnknown" name="tobaccoCurrent" value="unknown" onchange="toggleConditional('tobaccoCurrentFields', false)">
+                                            <label for="tobaccoCurrentUnknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                    <div id="tobaccoCurrentFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="tobaccoType">Type (cigarettes, cigars, chewing tobacco)</label>
+                                            <input type="text" id="tobaccoType" placeholder="Example: cigarettes">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tobaccoAmount">How much per day</label>
+                                            <input type="text" id="tobaccoAmount" placeholder="Example: 1 pack">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Did you use tobacco in the past?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="tobaccoPriorYes" name="tobaccoPrior" value="yes" onchange="toggleConditional('tobaccoPriorFields', true)">
+                                            <label for="tobaccoPriorYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="tobaccoPriorNo" name="tobaccoPrior" value="no" onchange="toggleConditional('tobaccoPriorFields', false)">
+                                            <label for="tobaccoPriorNo">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="tobaccoPriorUnknown" name="tobaccoPrior" value="unknown" onchange="toggleConditional('tobaccoPriorFields', false)">
+                                            <label for="tobaccoPriorUnknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                    <div id="tobaccoPriorFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="tobaccoPriorYears">How many years</label>
+                                            <input type="number" id="tobaccoPriorYears" placeholder="Example: 15" min="0" oninput="calculatePackYears()">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tobaccoPriorPacks">Packs per day (for cigarettes)</label>
+                                            <input type="number" id="tobaccoPriorPacks" placeholder="Example: 1.5" min="0" step="0.1" oninput="calculatePackYears()">
+                                        </div>
+                                        <div id="packYearsDisplay" class="pack-years-display" style="display: none;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="subsection">
+                                <h3 class="subsection-title">Alcohol</h3>
+                                <div class="form-group">
+                                    <label>Do you drink alcohol now?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="alcoholCurrentYes" name="alcoholCurrent" value="yes" onchange="toggleConditional('alcoholCurrentFields', true)">
+                                            <label for="alcoholCurrentYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="alcoholCurrentNo" name="alcoholCurrent" value="no" onchange="toggleConditional('alcoholCurrentFields', false)">
+                                            <label for="alcoholCurrentNo">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="alcoholCurrentUnknown" name="alcoholCurrent" value="unknown" onchange="toggleConditional('alcoholCurrentFields', false)">
+                                            <label for="alcoholCurrentUnknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                    <div id="alcoholCurrentFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="alcoholType">Type (beer, wine, liquor)</label>
+                                            <input type="text" id="alcoholType" placeholder="Example: beer">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="alcoholDrinks">Average drinks per week</label>
+                                            <input type="number" id="alcoholDrinks" placeholder="Example: 5" min="0">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="alcoholYears">How many years</label>
+                                            <input type="number" id="alcoholYears" placeholder="Example: 10" min="0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Did you drink alcohol in the past?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="alcoholPriorYes" name="alcoholPrior" value="yes" onchange="toggleConditional('alcoholPriorFields', true)">
+                                            <label for="alcoholPriorYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="alcoholPriorNo" name="alcoholPrior" value="no" onchange="toggleConditional('alcoholPriorFields', false)">
+                                            <label for="alcoholPriorNo">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="alcoholPriorUnknown" name="alcoholPrior" value="unknown" onchange="toggleConditional('alcoholPriorFields', false)">
+                                            <label for="alcoholPriorUnknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                    <div id="alcoholPriorFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="alcoholPriorType">Type (beer, wine, liquor)</label>
+                                            <input type="text" id="alcoholPriorType" placeholder="Example: wine">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="alcoholPriorDuration">How long and how much</label>
+                                            <input type="text" id="alcoholPriorDuration" placeholder="Example: 15 years, about 10 drinks/week">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="subsection">
+                                <h3 class="subsection-title">Recreational or non-prescribed drugs</h3>
+                                <div class="form-group">
+                                    <label>Do you use recreational or non-prescribed drugs now?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="drugCurrentYes" name="drugCurrent" value="yes" onchange="toggleConditional('drugCurrentFields', true)">
+                                            <label for="drugCurrentYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="drugCurrentNo" name="drugCurrent" value="no" onchange="toggleConditional('drugCurrentFields', false)">
+                                            <label for="drugCurrentNo">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="drugCurrentUnknown" name="drugCurrent" value="unknown" onchange="toggleConditional('drugCurrentFields', false)">
+                                            <label for="drugCurrentUnknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                    <div id="drugCurrentFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="drugCurrentType">Which drug(s)</label>
+                                            <input type="text" id="drugCurrentType" placeholder="Example: marijuana">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="drugCurrentFreq">How often</label>
+                                            <input type="text" id="drugCurrentFreq" placeholder="Example: weekly">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="drugCurrentRoute">How it is used (oral, inhaled, IV)</label>
+                                            <input type="text" id="drugCurrentRoute" placeholder="Example: inhaled">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Did you use recreational or non-prescribed drugs in the past?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="drugPriorYes" name="drugPrior" value="yes" onchange="toggleConditional('drugPriorFields', true)">
+                                            <label for="drugPriorYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="drugPriorNo" name="drugPrior" value="no" onchange="toggleConditional('drugPriorFields', false)">
+                                            <label for="drugPriorNo">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="drugPriorUnknown" name="drugPrior" value="unknown" onchange="toggleConditional('drugPriorFields', false)">
+                                            <label for="drugPriorUnknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                    <div id="drugPriorFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="drugPriorType">Which drug(s)</label>
+                                            <input type="text" id="drugPriorType" placeholder="Example: marijuana">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="drugPriorDuration">How long</label>
+                                            <input type="text" id="drugPriorDuration" placeholder="Example: 5 years, stopped 2010">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="drugPriorRoute">How it was used (oral, inhaled, IV)</label>
+                                            <input type="text" id="drugPriorRoute" placeholder="Example: oral">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
+                            <button type="button" class="btn btn-primary" data-action="next-step" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="form-step" data-step-title="Sleep apnea screening">
+                        <section class="section card" style="--delay: 0ms;">
+                            <h2 class="section-title">Sleep apnea screening (STOP-BANG)</h2>
+                            <p class="helper-text">Answer what you can. If you are not sure, choose Not sure.</p>
+                            <div class="question-grid">
+                                <div class="question-card" role="group" aria-labelledby="sb1Label">
+                                    <p id="sb1Label">Do you snore loudly (louder than talking or heard through a closed door)?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb1Yes" name="sb1" value="yes">
+                                            <label for="sb1Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb1No" name="sb1" value="no">
+                                            <label for="sb1No">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb1Unknown" name="sb1" value="unknown">
+                                            <label for="sb1Unknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb2Label">
+                                    <p id="sb2Label">Do you often feel tired or sleepy during the day?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb2Yes" name="sb2" value="yes">
+                                            <label for="sb2Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb2No" name="sb2" value="no">
+                                            <label for="sb2No">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb2Unknown" name="sb2" value="unknown">
+                                            <label for="sb2Unknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb3Label">
+                                    <p id="sb3Label">Has anyone seen you stop breathing during sleep?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb3Yes" name="sb3" value="yes">
+                                            <label for="sb3Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb3No" name="sb3" value="no">
+                                            <label for="sb3No">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb3Unknown" name="sb3" value="unknown">
+                                            <label for="sb3Unknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb4Label">
+                                    <p id="sb4Label">Do you have high blood pressure or take medicine for it?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb4Yes" name="sb4" value="yes">
+                                            <label for="sb4Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb4No" name="sb4" value="no">
+                                            <label for="sb4No">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb4Unknown" name="sb4" value="unknown">
+                                            <label for="sb4Unknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb5Label">
+                                    <p id="sb5Label">Is your BMI over 35?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb5Yes" name="sb5" value="yes">
+                                            <label for="sb5Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb5No" name="sb5" value="no">
+                                            <label for="sb5No">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb5Unknown" name="sb5" value="unknown">
+                                            <label for="sb5Unknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb6Label">
+                                    <p id="sb6Label">Are you older than 50?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb6Yes" name="sb6" value="yes">
+                                            <label for="sb6Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb6No" name="sb6" value="no">
+                                            <label for="sb6No">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb6Unknown" name="sb6" value="unknown">
+                                            <label for="sb6Unknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb7Label">
+                                    <p id="sb7Label">Is your neck size over 16 inches (40 cm)?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb7Yes" name="sb7" value="yes">
+                                            <label for="sb7Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb7No" name="sb7" value="no">
+                                            <label for="sb7No">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb7Unknown" name="sb7" value="unknown">
+                                            <label for="sb7Unknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb8Label">
+                                    <p id="sb8Label">Are you male?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb8Yes" name="sb8" value="yes">
+                                            <label for="sb8Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb8No" name="sb8" value="no">
+                                            <label for="sb8No">No</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb8Unknown" name="sb8" value="unknown">
+                                            <label for="sb8Unknown">Not sure</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
+                            <button type="button" class="btn btn-primary" data-action="next-step" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="form-step" data-step-title="Questions for your visit">
+                        <section class="section card" style="--delay: 0ms;">
+                            <h2 class="section-title">Questions for your visit</h2>
                             <div class="form-group">
-                                <label>Do you currently use illicit drugs?</label>
-                                <div class="radio-group">
-                                    <div class="radio-option">
-                                        <input type="radio" id="drugCurrentYes" name="drugCurrent" value="yes" onchange="toggleConditional('drugCurrentFields', true)">
-                                        <label for="drugCurrentYes">Yes</label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="drugCurrentNo" name="drugCurrent" value="no" onchange="toggleConditional('drugCurrentFields', false)">
-                                        <label for="drugCurrentNo">No</label>
-                                    </div>
-                                </div>
-                                <div id="drugCurrentFields" class="conditional-fields">
-                                    <div class="form-group">
-                                        <label for="drugCurrentType">Specify drug(s)</label>
-                                        <input type="text" id="drugCurrentType" placeholder="e.g., marijuana, cocaine">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="drugCurrentFreq">Frequency</label>
-                                        <input type="text" id="drugCurrentFreq" placeholder="e.g., daily, weekly">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="drugCurrentRoute">Route of administration</label>
-                                        <input type="text" id="drugCurrentRoute" placeholder="e.g., oral, inhaled, IV">
-                                    </div>
-                                </div>
+                                <label for="patientQuestions">What are the most important questions you want answered during your visit?</label>
+                                <textarea id="patientQuestions" rows="6" placeholder="Please list your questions here..."></textarea>
                             </div>
+                        </section>
 
-                            <div class="form-group">
-                                <label>Have you used illicit drugs in the past?</label>
-                                <div class="radio-group">
-                                    <div class="radio-option">
-                                        <input type="radio" id="drugPriorYes" name="drugPrior" value="yes" onchange="toggleConditional('drugPriorFields', true)">
-                                        <label for="drugPriorYes">Yes</label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="drugPriorNo" name="drugPrior" value="no" onchange="toggleConditional('drugPriorFields', false)">
-                                        <label for="drugPriorNo">No</label>
-                                    </div>
-                                </div>
-                                <div id="drugPriorFields" class="conditional-fields">
-                                    <div class="form-group">
-                                        <label for="drugPriorType">Specify drug(s)</label>
-                                        <input type="text" id="drugPriorType" placeholder="e.g., marijuana, cocaine">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="drugPriorDuration">Duration</label>
-                                        <input type="text" id="drugPriorDuration" placeholder="e.g., 5 years, stopped 2010">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="drugPriorRoute">Route of administration</label>
-                                        <input type="text" id="drugPriorRoute" placeholder="e.g., oral, inhaled, IV">
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
+                            <button type="button" class="btn btn-primary" onclick="generateSummary()">Generate MyChart Summary</button>
                         </div>
-                    </section>
-
-                    <section class="section card" style="--delay: 240ms;">
-                        <h2 class="section-title">STOP-BANG questionnaire (sleep apnea screening)</h2>
-                        <p class="helper-text" style="margin-bottom: 15px;">Please answer the following questions.</p>
-                        <div class="checkbox-group">
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="sb1" name="stopbang" value="Snoring">
-                                <label for="sb1">Do you snore loudly (louder than talking or loud enough to be heard through closed doors)?</label>
-                            </div>
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="sb2" name="stopbang" value="Tired">
-                                <label for="sb2">Do you often feel tired, fatigued, or sleepy during the daytime?</label>
-                            </div>
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="sb3" name="stopbang" value="Observed">
-                                <label for="sb3">Has anyone observed you stop breathing during your sleep?</label>
-                            </div>
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="sb4" name="stopbang" value="Pressure">
-                                <label for="sb4">Do you have or are you being treated for high blood pressure?</label>
-                            </div>
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="sb5" name="stopbang" value="BMI">
-                                <label for="sb5">Is your BMI greater than 35 kg/m2?</label>
-                            </div>
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="sb6" name="stopbang" value="Age">
-                                <label for="sb6">Are you over 50 years old?</label>
-                            </div>
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="sb7" name="stopbang" value="Neck">
-                                <label for="sb7">Is your neck circumference greater than 40 cm (about 16 inches)?</label>
-                            </div>
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="sb8" name="stopbang" value="Male">
-                                <label for="sb8">Are you male?</label>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="section card" style="--delay: 300ms;">
-                        <h2 class="section-title">Questions for your visit</h2>
-                        <div class="form-group">
-                            <label for="patientQuestions">What are the most important questions you want answered during your visit?</label>
-                            <textarea id="patientQuestions" rows="6" placeholder="Please list your questions here..."></textarea>
-                        </div>
-                    </section>
-
-                    <div class="section card submit-card" style="--delay: 360ms;">
-                        <p>When you are ready, generate a summary you can paste directly into MyChart.</p>
-                        <button type="button" class="btn btn-primary" onclick="generateSummary()">Generate MyChart Summary</button>
                     </div>
                 </form>
 
@@ -857,8 +1131,8 @@
             newEntry.className = 'medication-entry';
             newEntry.innerHTML = `
                 <div class="medication-input">
-                    <input type="text" class="med-name" placeholder="Medication name">
-                    <input type="text" class="med-dose" placeholder="Dose">
+                    <input type="text" class="med-name" placeholder="Medicine name (example: atorvastatin)">
+                    <input type="text" class="med-dose" placeholder="Dose (example: 40 mg once daily)">
                 </div>
                 <button type="button" class="btn btn-remove btn-small" onclick="this.parentElement.remove()">Remove</button>
             `;
@@ -888,131 +1162,176 @@
             }
         }
 
-        function buildTobaccoSummary() {
-            const tobaccoCurrent = document.querySelector('input[name="tobaccoCurrent"]:checked')?.value;
-            const tobaccoPrior = document.querySelector('input[name="tobaccoPrior"]:checked')?.value;
+        const steps = Array.from(document.querySelectorAll('.form-step'));
+        let currentStep = 0;
 
-            if (tobaccoCurrent === 'yes') {
-                const type = document.getElementById('tobaccoType').value.trim();
-                const amount = document.getElementById('tobaccoAmount').value.trim();
-                let summary = 'Current use';
-                if (type) summary += `, ${type}`;
-                if (amount) summary += `, ${amount}`;
-                return summary;
+        function updateStep(index, shouldScroll = true) {
+            if (!steps.length) {
+                return;
+            }
+            const totalSteps = steps.length;
+            currentStep = Math.min(Math.max(index, 0), totalSteps - 1);
+
+            steps.forEach((step, stepIndex) => {
+                step.classList.toggle('active', stepIndex === currentStep);
+            });
+
+            const stepLabel = document.getElementById('stepLabel');
+            const stepTitle = document.getElementById('stepTitle');
+            const progressFill = document.getElementById('progressFill');
+
+            if (stepLabel) {
+                stepLabel.textContent = `Step ${currentStep + 1} of ${totalSteps}`;
+            }
+            if (stepTitle) {
+                stepTitle.textContent = steps[currentStep].dataset.stepTitle || '';
+            }
+            if (progressFill) {
+                progressFill.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
             }
 
-            if (tobaccoPrior === 'yes') {
-                const years = document.getElementById('tobaccoPriorYears').value;
-                const packs = document.getElementById('tobaccoPriorPacks').value;
-                const packYears = years && packs ? (parseFloat(years) * parseFloat(packs)).toFixed(1) : null;
-                let summary = 'Former use';
-                if (packYears) summary += `, ${packYears} pack-years`;
-                return summary;
+            document.querySelectorAll('[data-action="prev-step"]').forEach(button => {
+                button.disabled = currentStep === 0;
+            });
+
+            if (shouldScroll) {
+                document.getElementById('questionnaireForm')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function nextStep() {
+            updateStep(currentStep + 1);
+        }
+
+        function prevStep() {
+            updateStep(currentStep - 1);
+        }
+
+        function resolveSubstanceSummary(current, prior, currentSummary, priorSummary) {
+            if (current === 'yes') {
+                return currentSummary();
             }
 
-            if (tobaccoCurrent === 'no' && tobaccoPrior === 'no') {
+            if (prior === 'yes') {
+                return priorSummary();
+            }
+
+            if (current === 'no' && prior === 'no') {
                 return 'No';
             }
 
-            if (tobaccoCurrent === 'no' && !tobaccoPrior) {
+            if (current === 'no' && !prior) {
                 return 'No current use';
             }
 
-            if (!tobaccoCurrent && tobaccoPrior === 'no') {
+            if (current === 'unknown' || prior === 'unknown') {
+                return 'Not sure';
+            }
+
+            if (!current && prior === 'no') {
                 return 'No';
             }
 
             return 'Not provided';
+        }
+
+        function buildTobaccoSummary() {
+            const tobaccoCurrent = document.querySelector('input[name="tobaccoCurrent"]:checked')?.value;
+            const tobaccoPrior = document.querySelector('input[name="tobaccoPrior"]:checked')?.value;
+
+            return resolveSubstanceSummary(
+                tobaccoCurrent,
+                tobaccoPrior,
+                () => {
+                    const type = document.getElementById('tobaccoType').value.trim();
+                    const amount = document.getElementById('tobaccoAmount').value.trim();
+                    let summary = 'Current use';
+                    if (type) summary += `, ${type}`;
+                    if (amount) summary += `, ${amount}`;
+                    return summary;
+                },
+                () => {
+                    const years = document.getElementById('tobaccoPriorYears').value;
+                    const packs = document.getElementById('tobaccoPriorPacks').value;
+                    const packYears = years && packs ? (parseFloat(years) * parseFloat(packs)).toFixed(1) : null;
+                    let summary = 'Former use';
+                    if (packYears) summary += `, ${packYears} pack-years`;
+                    return summary;
+                }
+            );
         }
 
         function buildAlcoholSummary() {
             const alcoholCurrent = document.querySelector('input[name="alcoholCurrent"]:checked')?.value;
             const alcoholPrior = document.querySelector('input[name="alcoholPrior"]:checked')?.value;
 
-            if (alcoholCurrent === 'yes') {
-                const type = document.getElementById('alcoholType').value.trim();
-                const drinks = document.getElementById('alcoholDrinks').value;
-                const years = document.getElementById('alcoholYears').value;
-                let summary = 'Current use';
-                if (type) summary += `, ${type}`;
-                if (drinks) summary += `, ${drinks} drinks/week`;
-                if (years) summary += `, ${years} years`;
-                return summary;
-            }
-
-            if (alcoholPrior === 'yes') {
-                const type = document.getElementById('alcoholPriorType').value.trim();
-                const duration = document.getElementById('alcoholPriorDuration').value.trim();
-                let summary = 'Former use';
-                if (type) summary += `, ${type}`;
-                if (duration) summary += `, ${duration}`;
-                return summary;
-            }
-
-            if (alcoholCurrent === 'no' && alcoholPrior === 'no') {
-                return 'No';
-            }
-
-            if (alcoholCurrent === 'no' && !alcoholPrior) {
-                return 'No current use';
-            }
-
-            if (!alcoholCurrent && alcoholPrior === 'no') {
-                return 'No';
-            }
-
-            return 'Not provided';
+            return resolveSubstanceSummary(
+                alcoholCurrent,
+                alcoholPrior,
+                () => {
+                    const type = document.getElementById('alcoholType').value.trim();
+                    const drinks = document.getElementById('alcoholDrinks').value;
+                    const years = document.getElementById('alcoholYears').value;
+                    let summary = 'Current use';
+                    if (type) summary += `, ${type}`;
+                    if (drinks) summary += `, ${drinks} drinks/week`;
+                    if (years) summary += `, ${years} years`;
+                    return summary;
+                },
+                () => {
+                    const type = document.getElementById('alcoholPriorType').value.trim();
+                    const duration = document.getElementById('alcoholPriorDuration').value.trim();
+                    let summary = 'Former use';
+                    if (type) summary += `, ${type}`;
+                    if (duration) summary += `, ${duration}`;
+                    return summary;
+                }
+            );
         }
 
         function buildDrugSummary() {
             const drugCurrent = document.querySelector('input[name="drugCurrent"]:checked')?.value;
             const drugPrior = document.querySelector('input[name="drugPrior"]:checked')?.value;
 
-            if (drugCurrent === 'yes') {
-                const type = document.getElementById('drugCurrentType').value.trim();
-                const freq = document.getElementById('drugCurrentFreq').value.trim();
-                const route = document.getElementById('drugCurrentRoute').value.trim();
-                let summary = 'Current use';
-                if (type) summary += `, ${type}`;
-                if (freq) summary += `, ${freq}`;
-                if (route) summary += `, ${route}`;
-                return summary;
-            }
-
-            if (drugPrior === 'yes') {
-                const type = document.getElementById('drugPriorType').value.trim();
-                const duration = document.getElementById('drugPriorDuration').value.trim();
-                const route = document.getElementById('drugPriorRoute').value.trim();
-                let summary = 'Former use';
-                if (type) summary += `, ${type}`;
-                if (duration) summary += `, ${duration}`;
-                if (route) summary += `, ${route}`;
-                return summary;
-            }
-
-            if (drugCurrent === 'no' && drugPrior === 'no') {
-                return 'No';
-            }
-
-            if (drugCurrent === 'no' && !drugPrior) {
-                return 'No current use';
-            }
-
-            if (!drugCurrent && drugPrior === 'no') {
-                return 'No';
-            }
-
-            return 'Not provided';
+            return resolveSubstanceSummary(
+                drugCurrent,
+                drugPrior,
+                () => {
+                    const type = document.getElementById('drugCurrentType').value.trim();
+                    const freq = document.getElementById('drugCurrentFreq').value.trim();
+                    const route = document.getElementById('drugCurrentRoute').value.trim();
+                    let summary = 'Current use';
+                    if (type) summary += `, ${type}`;
+                    if (freq) summary += `, ${freq}`;
+                    if (route) summary += `, ${route}`;
+                    return summary;
+                },
+                () => {
+                    const type = document.getElementById('drugPriorType').value.trim();
+                    const duration = document.getElementById('drugPriorDuration').value.trim();
+                    const route = document.getElementById('drugPriorRoute').value.trim();
+                    let summary = 'Former use';
+                    if (type) summary += `, ${type}`;
+                    if (duration) summary += `, ${duration}`;
+                    if (route) summary += `, ${route}`;
+                    return summary;
+                }
+            );
         }
 
         function generateSummary() {
             const lines = [];
+            const caregiverMode = document.getElementById('caregiverMode')?.checked;
 
             lines.push('Subject: Stroke Clinic Pre-Visit Questionnaire');
             lines.push('');
             lines.push('Hello Stroke Clinic team,');
             lines.push('');
-            lines.push('Here is my pre-visit questionnaire information:');
+            if (caregiverMode) {
+                lines.push('I am filling this out as a caregiver.');
+                lines.push('');
+            }
+            lines.push('Here is the pre-visit questionnaire information:');
             lines.push('');
 
             const pcp = document.getElementById('pcpName').value.trim();
@@ -1031,7 +1350,7 @@
                 }
             });
 
-            lines.push('Current medications and supplements:');
+            lines.push('Medicines and supplements:');
             if (meds.length > 0) {
                 meds.forEach(item => lines.push(`- ${item}`));
             } else {
@@ -1044,7 +1363,7 @@
             const bpDiaMin = document.getElementById('bpDiastolicMin').value;
             const bpDiaMax = document.getElementById('bpDiastolicMax').value;
 
-            let bpLine = 'Home blood pressure (past week): ';
+            let bpLine = 'Home blood pressure (last week): ';
             if (bpSysMin && bpSysMax && bpDiaMin && bpDiaMax) {
                 bpLine += `${bpSysMin}-${bpSysMax} / ${bpDiaMin}-${bpDiaMax} mmHg`;
             } else if (bpSysMin && bpDiaMin) {
@@ -1057,15 +1376,42 @@
 
             lines.push(`Tobacco use: ${buildTobaccoSummary()}`);
             lines.push(`Alcohol use: ${buildAlcoholSummary()}`);
-            lines.push(`Illicit drug use: ${buildDrugSummary()}`);
+            lines.push(`Recreational/non-prescribed drugs: ${buildDrugSummary()}`);
             lines.push('');
 
-            const stopbangChecked = document.querySelectorAll('input[name="stopbang"]:checked');
-            const stopbangItems = Array.from(stopbangChecked).map(cb => cb.value);
-            const stopbangScore = stopbangItems.length;
-            let osaLine = `OSA screen (STOP-BANG): ${stopbangScore}/8`;
-            if (stopbangScore > 0) {
-                osaLine += ` (Yes: ${stopbangItems.join(', ')})`;
+            const stopbangQuestions = [
+                { name: 'sb1', label: 'Snoring' },
+                { name: 'sb2', label: 'Tired' },
+                { name: 'sb3', label: 'Observed' },
+                { name: 'sb4', label: 'Pressure' },
+                { name: 'sb5', label: 'BMI' },
+                { name: 'sb6', label: 'Age' },
+                { name: 'sb7', label: 'Neck' },
+                { name: 'sb8', label: 'Male' }
+            ];
+            const stopbangYes = [];
+            const stopbangUnknown = [];
+
+            stopbangQuestions.forEach(question => {
+                const value = document.querySelector(`input[name="${question.name}"]:checked`)?.value;
+                if (value === 'yes') {
+                    stopbangYes.push(question.label);
+                } else if (value === 'unknown') {
+                    stopbangUnknown.push(question.label);
+                }
+            });
+
+            const stopbangScore = stopbangYes.length;
+            let osaLine = `Sleep apnea screen (STOP-BANG): ${stopbangScore}/8`;
+            const osaDetails = [];
+            if (stopbangYes.length) {
+                osaDetails.push(`Yes: ${stopbangYes.join(', ')}`);
+            }
+            if (stopbangUnknown.length) {
+                osaDetails.push(`Not sure: ${stopbangUnknown.join(', ')}`);
+            }
+            if (osaDetails.length) {
+                osaLine += ` (${osaDetails.join('; ')})`;
             }
             lines.push(osaLine);
             lines.push('');
@@ -1147,8 +1493,11 @@
                 entries[i].remove();
             }
 
+            updateStep(0, false);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        updateStep(0, false);
     </script>
 </body>
 </html>
