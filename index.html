@@ -37,8 +37,9 @@
                 radial-gradient(circle at 85% 5%, rgba(15, 107, 107, 0.14), transparent 45%),
                 linear-gradient(120deg, #f6f1e8 0%, #eef4f3 100%);
             min-height: 100vh;
-            font-size: 18px;
+            font-size: clamp(16px, 0.4vw + 15px, 18px);
             line-height: 1.7;
+            -webkit-text-size-adjust: 100%;
         }
 
         .page {
@@ -606,6 +607,7 @@
 
             .result-container {
                 position: static;
+                margin-top: 20px;
             }
         }
 
@@ -614,6 +616,14 @@
             .medication-input,
             .bp-inputs {
                 grid-template-columns: 1fr;
+            }
+
+            .medication-entry {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-remove {
+                width: 100%;
             }
 
             .step-actions {
@@ -627,6 +637,26 @@
 
             .hero {
                 padding: 54px 18px 76px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .radio-group {
+                width: 100%;
+            }
+
+            .radio-option {
+                flex: 1 1 30%;
+            }
+
+            .radio-option label {
+                width: 100%;
+                text-align: center;
+            }
+
+            .stepper-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
 
