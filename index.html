@@ -177,6 +177,25 @@
             letter-spacing: 0.1em;
         }
 
+        .subsection {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px dashed var(--outline);
+        }
+
+        .subsection:first-of-type {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        .subsection-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--accent-strong);
+            margin-bottom: 12px;
+        }
+
         @keyframes rise {
             to {
                 opacity: 1;
@@ -588,172 +607,176 @@
                     </section>
 
                     <section class="section card" style="--delay: 180ms;">
-                        <h2 class="section-title">Tobacco use</h2>
-                        <div class="form-group">
-                            <label>Do you currently use tobacco?</label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" id="tobaccoCurrentYes" name="tobaccoCurrent" value="yes" onchange="toggleConditional('tobaccoCurrentFields', true)">
-                                    <label for="tobaccoCurrentYes">Yes</label>
+                        <h2 class="section-title">Substance use and exposure</h2>
+
+                        <div class="subsection">
+                            <h3 class="subsection-title">Tobacco</h3>
+                            <div class="form-group">
+                                <label>Do you currently use tobacco?</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="tobaccoCurrentYes" name="tobaccoCurrent" value="yes" onchange="toggleConditional('tobaccoCurrentFields', true)">
+                                        <label for="tobaccoCurrentYes">Yes</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="tobaccoCurrentNo" name="tobaccoCurrent" value="no" onchange="toggleConditional('tobaccoCurrentFields', false)">
+                                        <label for="tobaccoCurrentNo">No</label>
+                                    </div>
                                 </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="tobaccoCurrentNo" name="tobaccoCurrent" value="no" onchange="toggleConditional('tobaccoCurrentFields', false)">
-                                    <label for="tobaccoCurrentNo">No</label>
+                                <div id="tobaccoCurrentFields" class="conditional-fields">
+                                    <div class="form-group">
+                                        <label for="tobaccoType">Type of tobacco</label>
+                                        <input type="text" id="tobaccoType" placeholder="e.g., cigarettes, cigars, chewing tobacco">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tobaccoAmount">Amount per day</label>
+                                        <input type="text" id="tobaccoAmount" placeholder="e.g., 1 pack, 5 cigarettes">
+                                    </div>
                                 </div>
                             </div>
-                            <div id="tobaccoCurrentFields" class="conditional-fields">
-                                <div class="form-group">
-                                    <label for="tobaccoType">Type of tobacco</label>
-                                    <input type="text" id="tobaccoType" placeholder="e.g., cigarettes, cigars, chewing tobacco">
+
+                            <div class="form-group">
+                                <label>Have you used tobacco in the past?</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="tobaccoPriorYes" name="tobaccoPrior" value="yes" onchange="toggleConditional('tobaccoPriorFields', true)">
+                                        <label for="tobaccoPriorYes">Yes</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="tobaccoPriorNo" name="tobaccoPrior" value="no" onchange="toggleConditional('tobaccoPriorFields', false)">
+                                        <label for="tobaccoPriorNo">No</label>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="tobaccoAmount">Amount per day</label>
-                                    <input type="text" id="tobaccoAmount" placeholder="e.g., 1 pack, 5 cigarettes">
+                                <div id="tobaccoPriorFields" class="conditional-fields">
+                                    <div class="form-group">
+                                        <label for="tobaccoPriorYears">Total years used</label>
+                                        <input type="number" id="tobaccoPriorYears" placeholder="e.g., 15" min="0" oninput="calculatePackYears()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tobaccoPriorPacks">Packs per day (for cigarettes)</label>
+                                        <input type="number" id="tobaccoPriorPacks" placeholder="e.g., 1.5" min="0" step="0.1" oninput="calculatePackYears()">
+                                    </div>
+                                    <div id="packYearsDisplay" class="pack-years-display" style="display: none;"></div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Have you used tobacco in the past?</label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" id="tobaccoPriorYes" name="tobaccoPrior" value="yes" onchange="toggleConditional('tobaccoPriorFields', true)">
-                                    <label for="tobaccoPriorYes">Yes</label>
+                        <div class="subsection">
+                            <h3 class="subsection-title">Alcohol</h3>
+                            <div class="form-group">
+                                <label>Do you currently use alcohol?</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="alcoholCurrentYes" name="alcoholCurrent" value="yes" onchange="toggleConditional('alcoholCurrentFields', true)">
+                                        <label for="alcoholCurrentYes">Yes</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="alcoholCurrentNo" name="alcoholCurrent" value="no" onchange="toggleConditional('alcoholCurrentFields', false)">
+                                        <label for="alcoholCurrentNo">No</label>
+                                    </div>
                                 </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="tobaccoPriorNo" name="tobaccoPrior" value="no" onchange="toggleConditional('tobaccoPriorFields', false)">
-                                    <label for="tobaccoPriorNo">No</label>
+                                <div id="alcoholCurrentFields" class="conditional-fields">
+                                    <div class="form-group">
+                                        <label for="alcoholType">Type of alcohol</label>
+                                        <input type="text" id="alcoholType" placeholder="e.g., beer, wine, liquor">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alcoholDrinks">Average drinks per week</label>
+                                        <input type="number" id="alcoholDrinks" placeholder="e.g., 5" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alcoholYears">Years of use</label>
+                                        <input type="number" id="alcoholYears" placeholder="e.g., 10" min="0">
+                                    </div>
                                 </div>
                             </div>
-                            <div id="tobaccoPriorFields" class="conditional-fields">
-                                <div class="form-group">
-                                    <label for="tobaccoPriorYears">Total years used</label>
-                                    <input type="number" id="tobaccoPriorYears" placeholder="e.g., 15" min="0" oninput="calculatePackYears()">
+
+                            <div class="form-group">
+                                <label>Have you used alcohol in the past?</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="alcoholPriorYes" name="alcoholPrior" value="yes" onchange="toggleConditional('alcoholPriorFields', true)">
+                                        <label for="alcoholPriorYes">Yes</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="alcoholPriorNo" name="alcoholPrior" value="no" onchange="toggleConditional('alcoholPriorFields', false)">
+                                        <label for="alcoholPriorNo">No</label>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="tobaccoPriorPacks">Packs per day (for cigarettes)</label>
-                                    <input type="number" id="tobaccoPriorPacks" placeholder="e.g., 1.5" min="0" step="0.1" oninput="calculatePackYears()">
+                                <div id="alcoholPriorFields" class="conditional-fields">
+                                    <div class="form-group">
+                                        <label for="alcoholPriorType">Type of alcohol</label>
+                                        <input type="text" id="alcoholPriorType" placeholder="e.g., beer, wine, liquor">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alcoholPriorDuration">Duration and amount</label>
+                                        <input type="text" id="alcoholPriorDuration" placeholder="e.g., 15 years, ~10 drinks/week">
+                                    </div>
                                 </div>
-                                <div id="packYearsDisplay" class="pack-years-display" style="display: none;"></div>
+                            </div>
+                        </div>
+
+                        <div class="subsection">
+                            <h3 class="subsection-title">Illicit drugs</h3>
+                            <div class="form-group">
+                                <label>Do you currently use illicit drugs?</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="drugCurrentYes" name="drugCurrent" value="yes" onchange="toggleConditional('drugCurrentFields', true)">
+                                        <label for="drugCurrentYes">Yes</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="drugCurrentNo" name="drugCurrent" value="no" onchange="toggleConditional('drugCurrentFields', false)">
+                                        <label for="drugCurrentNo">No</label>
+                                    </div>
+                                </div>
+                                <div id="drugCurrentFields" class="conditional-fields">
+                                    <div class="form-group">
+                                        <label for="drugCurrentType">Specify drug(s)</label>
+                                        <input type="text" id="drugCurrentType" placeholder="e.g., marijuana, cocaine">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="drugCurrentFreq">Frequency</label>
+                                        <input type="text" id="drugCurrentFreq" placeholder="e.g., daily, weekly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="drugCurrentRoute">Route of administration</label>
+                                        <input type="text" id="drugCurrentRoute" placeholder="e.g., oral, inhaled, IV">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Have you used illicit drugs in the past?</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="drugPriorYes" name="drugPrior" value="yes" onchange="toggleConditional('drugPriorFields', true)">
+                                        <label for="drugPriorYes">Yes</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="drugPriorNo" name="drugPrior" value="no" onchange="toggleConditional('drugPriorFields', false)">
+                                        <label for="drugPriorNo">No</label>
+                                    </div>
+                                </div>
+                                <div id="drugPriorFields" class="conditional-fields">
+                                    <div class="form-group">
+                                        <label for="drugPriorType">Specify drug(s)</label>
+                                        <input type="text" id="drugPriorType" placeholder="e.g., marijuana, cocaine">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="drugPriorDuration">Duration</label>
+                                        <input type="text" id="drugPriorDuration" placeholder="e.g., 5 years, stopped 2010">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="drugPriorRoute">Route of administration</label>
+                                        <input type="text" id="drugPriorRoute" placeholder="e.g., oral, inhaled, IV">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
 
                     <section class="section card" style="--delay: 240ms;">
-                        <h2 class="section-title">Alcohol use</h2>
-                        <div class="form-group">
-                            <label>Do you currently use alcohol?</label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" id="alcoholCurrentYes" name="alcoholCurrent" value="yes" onchange="toggleConditional('alcoholCurrentFields', true)">
-                                    <label for="alcoholCurrentYes">Yes</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="alcoholCurrentNo" name="alcoholCurrent" value="no" onchange="toggleConditional('alcoholCurrentFields', false)">
-                                    <label for="alcoholCurrentNo">No</label>
-                                </div>
-                            </div>
-                            <div id="alcoholCurrentFields" class="conditional-fields">
-                                <div class="form-group">
-                                    <label for="alcoholType">Type of alcohol</label>
-                                    <input type="text" id="alcoholType" placeholder="e.g., beer, wine, liquor">
-                                </div>
-                                <div class="form-group">
-                                    <label for="alcoholDrinks">Average drinks per week</label>
-                                    <input type="number" id="alcoholDrinks" placeholder="e.g., 5" min="0">
-                                </div>
-                                <div class="form-group">
-                                    <label for="alcoholYears">Years of use</label>
-                                    <input type="number" id="alcoholYears" placeholder="e.g., 10" min="0">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Have you used alcohol in the past?</label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" id="alcoholPriorYes" name="alcoholPrior" value="yes" onchange="toggleConditional('alcoholPriorFields', true)">
-                                    <label for="alcoholPriorYes">Yes</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="alcoholPriorNo" name="alcoholPrior" value="no" onchange="toggleConditional('alcoholPriorFields', false)">
-                                    <label for="alcoholPriorNo">No</label>
-                                </div>
-                            </div>
-                            <div id="alcoholPriorFields" class="conditional-fields">
-                                <div class="form-group">
-                                    <label for="alcoholPriorType">Type of alcohol</label>
-                                    <input type="text" id="alcoholPriorType" placeholder="e.g., beer, wine, liquor">
-                                </div>
-                                <div class="form-group">
-                                    <label for="alcoholPriorDuration">Duration and amount</label>
-                                    <input type="text" id="alcoholPriorDuration" placeholder="e.g., 15 years, ~10 drinks/week">
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="section card" style="--delay: 300ms;">
-                        <h2 class="section-title">Illicit drug use and exposure</h2>
-                        <div class="form-group">
-                            <label>Do you currently use illicit drugs?</label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" id="drugCurrentYes" name="drugCurrent" value="yes" onchange="toggleConditional('drugCurrentFields', true)">
-                                    <label for="drugCurrentYes">Yes</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="drugCurrentNo" name="drugCurrent" value="no" onchange="toggleConditional('drugCurrentFields', false)">
-                                    <label for="drugCurrentNo">No</label>
-                                </div>
-                            </div>
-                            <div id="drugCurrentFields" class="conditional-fields">
-                                <div class="form-group">
-                                    <label for="drugCurrentType">Specify drug(s)</label>
-                                    <input type="text" id="drugCurrentType" placeholder="e.g., marijuana, cocaine">
-                                </div>
-                                <div class="form-group">
-                                    <label for="drugCurrentFreq">Frequency</label>
-                                    <input type="text" id="drugCurrentFreq" placeholder="e.g., daily, weekly">
-                                </div>
-                                <div class="form-group">
-                                    <label for="drugCurrentRoute">Route of administration</label>
-                                    <input type="text" id="drugCurrentRoute" placeholder="e.g., oral, inhaled, IV">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Have you used illicit drugs in the past?</label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" id="drugPriorYes" name="drugPrior" value="yes" onchange="toggleConditional('drugPriorFields', true)">
-                                    <label for="drugPriorYes">Yes</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="drugPriorNo" name="drugPrior" value="no" onchange="toggleConditional('drugPriorFields', false)">
-                                    <label for="drugPriorNo">No</label>
-                                </div>
-                            </div>
-                            <div id="drugPriorFields" class="conditional-fields">
-                                <div class="form-group">
-                                    <label for="drugPriorType">Specify drug(s)</label>
-                                    <input type="text" id="drugPriorType" placeholder="e.g., marijuana, cocaine">
-                                </div>
-                                <div class="form-group">
-                                    <label for="drugPriorDuration">Duration</label>
-                                    <input type="text" id="drugPriorDuration" placeholder="e.g., 5 years, stopped 2010">
-                                </div>
-                                <div class="form-group">
-                                    <label for="drugPriorRoute">Route of administration</label>
-                                    <input type="text" id="drugPriorRoute" placeholder="e.g., oral, inhaled, IV">
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="section card" style="--delay: 360ms;">
                         <h2 class="section-title">STOP-BANG questionnaire (sleep apnea screening)</h2>
                         <p class="helper-text" style="margin-bottom: 15px;">Please answer the following questions.</p>
                         <div class="checkbox-group">
@@ -792,7 +815,7 @@
                         </div>
                     </section>
 
-                    <section class="section card" style="--delay: 420ms;">
+                    <section class="section card" style="--delay: 300ms;">
                         <h2 class="section-title">Questions for your visit</h2>
                         <div class="form-group">
                             <label for="patientQuestions">What are the most important questions you want answered during your visit?</label>
@@ -800,7 +823,7 @@
                         </div>
                     </section>
 
-                    <div class="section card submit-card" style="--delay: 480ms;">
+                    <div class="section card submit-card" style="--delay: 360ms;">
                         <p>When you are ready, generate a summary you can paste directly into MyChart.</p>
                         <button type="button" class="btn btn-primary" onclick="generateSummary()">Generate MyChart Summary</button>
                     </div>
