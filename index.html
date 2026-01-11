@@ -119,20 +119,6 @@
             z-index: 2;
         }
 
-        .notice {
-            background: var(--panel);
-            border: 1px solid var(--outline);
-            border-radius: 14px;
-            padding: 16px 18px;
-            box-shadow: 0 12px 30px rgba(15, 61, 62, 0.08);
-            margin-bottom: 22px;
-            font-size: 0.95rem;
-        }
-
-        .notice strong {
-            color: var(--accent-strong);
-        }
-
         .layout {
             display: grid;
             gap: 24px;
@@ -549,38 +535,15 @@
                 <h1>Stroke Clinic Pre-Visit Questionnaire</h1>
                 <p>Fill in the details below and generate a MyChart-ready message you can copy and paste.</p>
                 <div class="hero-meta">
-                    <span class="hero-chip">All data stays on this device</span>
                     <span class="hero-chip">Estimated time: 5 to 7 minutes</span>
                 </div>
             </div>
         </header>
 
         <main class="container">
-            <div class="notice">
-                <strong>Privacy note:</strong> This form runs entirely in your browser. Nothing is stored or sent anywhere.
-            </div>
-
             <div class="layout">
                 <form id="questionnaireForm" class="form-stack">
                     <section class="section card" style="--delay: 0ms;">
-                        <h2 class="section-title">Patient details</h2>
-                        <div class="form-group">
-                            <label for="patientName">Patient full name (optional)</label>
-                            <input type="text" id="patientName" placeholder="Jane Doe">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="patientDob">Date of birth (optional)</label>
-                                <input type="date" id="patientDob">
-                            </div>
-                            <div class="form-group">
-                                <label for="appointmentDate">Appointment date (optional)</label>
-                                <input type="date" id="appointmentDate">
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="section card" style="--delay: 60ms;">
                         <h2 class="section-title">Primary care information</h2>
                         <div class="form-group">
                             <label for="pcpName">Primary care doctor name</label>
@@ -588,7 +551,7 @@
                         </div>
                     </section>
 
-                    <section class="section card" style="--delay: 120ms;">
+                    <section class="section card" style="--delay: 60ms;">
                         <h2 class="section-title">Current medications and supplements</h2>
                         <div id="medicationsContainer">
                             <div class="medication-entry">
@@ -601,7 +564,7 @@
                         <button type="button" class="btn btn-secondary btn-small" onclick="addMedication()">+ Add another medication</button>
                     </section>
 
-                    <section class="section card" style="--delay: 180ms;">
+                    <section class="section card" style="--delay: 120ms;">
                         <h2 class="section-title">Home blood pressure (past week)</h2>
                         <div class="bp-inputs">
                             <div class="bp-group">
@@ -624,7 +587,7 @@
                         <p class="helper-text">Enter the range of your blood pressure readings over the past week.</p>
                     </section>
 
-                    <section class="section card" style="--delay: 240ms;">
+                    <section class="section card" style="--delay: 180ms;">
                         <h2 class="section-title">Tobacco use</h2>
                         <div class="form-group">
                             <label>Do you currently use tobacco?</label>
@@ -676,7 +639,7 @@
                         </div>
                     </section>
 
-                    <section class="section card" style="--delay: 300ms;">
+                    <section class="section card" style="--delay: 240ms;">
                         <h2 class="section-title">Alcohol use</h2>
                         <div class="form-group">
                             <label>Do you currently use alcohol?</label>
@@ -731,7 +694,7 @@
                         </div>
                     </section>
 
-                    <section class="section card" style="--delay: 360ms;">
+                    <section class="section card" style="--delay: 300ms;">
                         <h2 class="section-title">Illicit drug use and exposure</h2>
                         <div class="form-group">
                             <label>Do you currently use illicit drugs?</label>
@@ -790,7 +753,7 @@
                         </div>
                     </section>
 
-                    <section class="section card" style="--delay: 420ms;">
+                    <section class="section card" style="--delay: 360ms;">
                         <h2 class="section-title">STOP-BANG questionnaire (sleep apnea screening)</h2>
                         <p class="helper-text" style="margin-bottom: 15px;">Please answer the following questions.</p>
                         <div class="checkbox-group">
@@ -829,7 +792,7 @@
                         </div>
                     </section>
 
-                    <section class="section card" style="--delay: 480ms;">
+                    <section class="section card" style="--delay: 420ms;">
                         <h2 class="section-title">Questions for your visit</h2>
                         <div class="form-group">
                             <label for="patientQuestions">What are the most important questions you want answered during your visit?</label>
@@ -837,7 +800,7 @@
                         </div>
                     </section>
 
-                    <div class="section card submit-card" style="--delay: 540ms;">
+                    <div class="section card submit-card" style="--delay: 480ms;">
                         <p>When you are ready, generate a summary you can paste directly into MyChart.</p>
                         <button type="button" class="btn btn-primary" onclick="generateSummary()">Generate MyChart Summary</button>
                     </div>
@@ -900,17 +863,6 @@
             } else {
                 display.style.display = 'none';
             }
-        }
-
-        function formatDate(value) {
-            if (!value) {
-                return '';
-            }
-            const parts = value.split('-');
-            if (parts.length !== 3) {
-                return value;
-            }
-            return `${parts[1]}/${parts[2]}/${parts[0]}`;
         }
 
         function buildTobaccoSummary() {
@@ -1032,9 +984,6 @@
 
         function generateSummary() {
             const lines = [];
-            const patientName = document.getElementById('patientName').value.trim();
-            const patientDob = formatDate(document.getElementById('patientDob').value);
-            const appointmentDate = formatDate(document.getElementById('appointmentDate').value);
 
             lines.push('Subject: Stroke Clinic Pre-Visit Questionnaire');
             lines.push('');
@@ -1042,14 +991,6 @@
             lines.push('');
             lines.push('Here is my pre-visit questionnaire information:');
             lines.push('');
-
-            if (patientName || patientDob || appointmentDate) {
-                lines.push('Patient details:');
-                if (patientName) lines.push(`- Name: ${patientName}`);
-                if (patientDob) lines.push(`- Date of birth: ${patientDob}`);
-                if (appointmentDate) lines.push(`- Appointment date: ${appointmentDate}`);
-                lines.push('');
-            }
 
             const pcp = document.getElementById('pcpName').value.trim();
             lines.push(`Primary care doctor: ${pcp || 'None'}`);
@@ -1109,12 +1050,6 @@
             const questions = document.getElementById('patientQuestions').value.trim();
             lines.push('Questions for provider:');
             lines.push(questions || 'None');
-
-            if (patientName) {
-                lines.push('');
-                lines.push('Thank you,');
-                lines.push(patientName);
-            }
 
             const summary = lines.join('\n');
             const resultContainer = document.getElementById('resultContainer');
