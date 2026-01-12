@@ -21,6 +21,7 @@
             --outline: #e3ddd1;
             --shadow: 0 20px 45px rgba(15, 61, 62, 0.12);
             --radius: 18px;
+            --base-font: clamp(16px, 0.4vw + 15px, 18px);
         }
 
         * {
@@ -37,9 +38,53 @@
                 radial-gradient(circle at 85% 5%, rgba(15, 107, 107, 0.14), transparent 45%),
                 linear-gradient(120deg, #f6f1e8 0%, #eef4f3 100%);
             min-height: 100vh;
-            font-size: clamp(16px, 0.4vw + 15px, 18px);
+            font-size: var(--base-font);
             line-height: 1.7;
             -webkit-text-size-adjust: 100%;
+        }
+
+        body.large-text {
+            --base-font: clamp(18px, 0.6vw + 16px, 21px);
+        }
+
+        body.high-contrast {
+            --ink: #0b0b0b;
+            --muted: #1f1f1f;
+            --accent: #0b1f2a;
+            --accent-strong: #08141c;
+            --accent-warm: #b04b1a;
+            --accent-soft: rgba(11, 31, 42, 0.2);
+            --bg: #ffffff;
+            --panel: #ffffff;
+            --panel-alt: #f5f5f5;
+            --outline: #111111;
+            --shadow: none;
+        }
+
+        body.high-contrast {
+            background: #ffffff;
+        }
+
+        body.high-contrast .hero {
+            background: #0b1f2a;
+        }
+
+        body.high-contrast .hero-chip,
+        body.high-contrast .hero-tag {
+            border-color: rgba(255, 255, 255, 0.45);
+        }
+
+        body.reduced-motion {
+            scroll-behavior: auto;
+        }
+
+        body.reduced-motion .section,
+        body.reduced-motion .progress-bar-fill,
+        body.reduced-motion .btn,
+        body.reduced-motion .radio-option label,
+        body.reduced-motion .conditional-fields {
+            animation: none;
+            transition: none;
         }
 
         .page {
@@ -180,6 +225,11 @@
             width: 22px;
             height: 22px;
             accent-color: var(--accent);
+        }
+
+        .toggle-list {
+            display: grid;
+            gap: 10px;
         }
 
         .stepper {
@@ -345,6 +395,28 @@
             font-size: 0.95rem;
             color: var(--muted);
             margin-top: 6px;
+        }
+
+        .choice-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .choice-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--outline);
+            background: #fff;
+        }
+
+        .choice-option input {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--accent);
         }
 
         .medication-entry {
@@ -535,6 +607,52 @@
             margin-bottom: 0;
         }
 
+        .review-card {
+            display: grid;
+            gap: 16px;
+        }
+
+        .review-alert {
+            padding: 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(209, 132, 80, 0.35);
+            background: rgba(209, 132, 80, 0.18);
+        }
+
+        .review-alert p {
+            margin: 0 0 8px;
+            font-weight: 600;
+        }
+
+        .review-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 8px;
+        }
+
+        .review-list li {
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px dashed var(--outline);
+            background: #fff;
+            font-weight: 600;
+        }
+
+        .review-complete {
+            padding: 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(15, 107, 107, 0.25);
+            background: rgba(15, 107, 107, 0.12);
+            font-weight: 600;
+            color: var(--accent-strong);
+        }
+
+        .review-content {
+            max-height: 360px;
+        }
+
         .result-container {
             padding: 20px;
             position: sticky;
@@ -626,6 +744,10 @@
                 width: 100%;
             }
 
+            .review-content {
+                max-height: none;
+            }
+
             .step-actions {
                 flex-direction: column;
                 align-items: stretch;
@@ -690,15 +812,29 @@
                             <p class="helper-title">Take your time. You can skip any question or choose Not sure.</p>
                             <p class="helper-text">If you are filling this out for someone else, turn on caregiver mode.</p>
                         </div>
-                        <label class="toggle-row">
-                            <input type="checkbox" id="caregiverMode">
-                            <span>Caregiver mode: I am filling this out for someone else</span>
-                        </label>
+                        <div class="toggle-list">
+                            <label class="toggle-row">
+                                <input type="checkbox" id="caregiverMode">
+                                <span>Caregiver mode: I am filling this out for someone else</span>
+                            </label>
+                            <label class="toggle-row">
+                                <input type="checkbox" id="largeTextToggle">
+                                <span>Large text</span>
+                            </label>
+                            <label class="toggle-row">
+                                <input type="checkbox" id="highContrastToggle">
+                                <span>High contrast</span>
+                            </label>
+                            <label class="toggle-row">
+                                <input type="checkbox" id="reduceMotionToggle">
+                                <span>Reduce motion</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="card stepper" aria-live="polite">
                         <div class="stepper-header">
-                            <span id="stepLabel" class="step-label">Step 1 of 5</span>
+                            <span id="stepLabel" class="step-label">Step 1 of 6</span>
                             <span id="stepTitle" class="step-title">Primary care and medicines</span>
                         </div>
                         <div class="progress-bar">
@@ -725,8 +861,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-secondary btn-small" onclick="addMedication()">+ Add another medicine</button>
+                            <button type="button" id="addMedicationBtn" class="btn btn-secondary btn-small" onclick="addMedication()">+ Add another medicine</button>
                             <p class="helper-text">Include prescriptions, over-the-counter medicines, and vitamins.</p>
+                            <div class="choice-list">
+                                <label class="choice-option">
+                                    <input type="checkbox" id="medNone" onchange="updateMedicationStatus('none')">
+                                    <span>I do not take any medicines right now</span>
+                                </label>
+                                <label class="choice-option">
+                                    <input type="checkbox" id="medUnknown" onchange="updateMedicationStatus('unknown')">
+                                    <span>Not sure about my medicines</span>
+                                </label>
+                            </div>
                         </section>
 
                         <div class="step-actions">
@@ -756,7 +902,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="helper-text">If you check at home, enter the lowest and highest readings you saw.</p>
+                            <p class="helper-text">Top number is systolic, bottom number is diastolic. If you check at home, enter the lowest and highest readings you saw.</p>
+                            <div class="choice-list">
+                                <label class="choice-option">
+                                    <input type="checkbox" id="bpNoCheck" onchange="updateBpStatus('noCheck')">
+                                    <span>I do not check my blood pressure at home</span>
+                                </label>
+                                <label class="choice-option">
+                                    <input type="checkbox" id="bpUnknown" onchange="updateBpStatus('unknown')">
+                                    <span>Not sure</span>
+                                </label>
+                            </div>
                         </section>
 
                         <div class="step-actions">
@@ -822,13 +978,14 @@
                                             <input type="number" id="tobaccoPriorYears" placeholder="Example: 15" min="0" oninput="calculatePackYears()">
                                         </div>
                                         <div class="form-group">
-                                            <label for="tobaccoPriorPacks">Packs per day (for cigarettes)</label>
-                                            <input type="number" id="tobaccoPriorPacks" placeholder="Example: 1.5" min="0" step="0.1" oninput="calculatePackYears()">
-                                        </div>
-                                        <div id="packYearsDisplay" class="pack-years-display" style="display: none;"></div>
+                                        <label for="tobaccoPriorPacks">Packs per day (for cigarettes)</label>
+                                        <input type="number" id="tobaccoPriorPacks" placeholder="Example: 1.5" min="0" step="0.1" oninput="calculatePackYears()">
                                     </div>
+                                    <div id="packYearsDisplay" class="pack-years-display" style="display: none;"></div>
+                                    <p class="helper-text">Pack-years = packs per day x years.</p>
                                 </div>
                             </div>
+                        </div>
 
                             <div class="subsection">
                                 <h3 class="subsection-title">Alcohol</h3>
@@ -970,7 +1127,7 @@
                     <div class="form-step" data-step-title="Sleep apnea screening">
                         <section class="section card" style="--delay: 0ms;">
                             <h2 class="section-title">Sleep apnea screening (STOP-BANG)</h2>
-                            <p class="helper-text">Answer what you can. If you are not sure, choose Not sure.</p>
+                            <p class="helper-text">STOP-BANG is a quick screen for sleep apnea. Answer what you can. If you are not sure, choose Not sure.</p>
                             <div class="question-grid">
                                 <div class="question-card" role="group" aria-labelledby="sb1Label">
                                     <p id="sb1Label">Do you snore loudly (louder than talking or heard through a closed door)?</p>
@@ -1128,7 +1285,27 @@
 
                         <div class="step-actions">
                             <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
-                            <button type="button" class="btn btn-primary" onclick="generateSummary()">Generate MyChart Summary</button>
+                            <button type="button" class="btn btn-primary" onclick="generateSummary(true)">Review MyChart message</button>
+                        </div>
+                    </div>
+
+                    <div class="form-step" data-step-title="Review and confirm">
+                        <section class="section card review-card" style="--delay: 0ms;">
+                            <h2 class="section-title">Review and confirm</h2>
+                            <p class="helper-text">Check your message and see any sections that might be missing.</p>
+                            <div id="reviewMissing" class="review-alert" hidden>
+                                <p>Sections that look incomplete</p>
+                                <ul id="reviewMissingList" class="review-list"></ul>
+                            </div>
+                            <div id="reviewComplete" class="review-complete" hidden>All sections look complete.</div>
+                            <div id="reviewContent" class="result-content review-content" aria-live="polite"></div>
+                        </section>
+
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
+                            <button type="button" class="btn btn-primary" onclick="copyToClipboard(event)">Copy message</button>
+                            <button type="button" class="btn btn-ghost" onclick="downloadPDF()">Download PDF</button>
+                            <button type="button" class="btn btn-ghost" onclick="resetForm()">Start over</button>
                         </div>
                     </div>
                 </form>
@@ -1156,6 +1333,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
         function addMedication() {
+            const addButton = document.getElementById('addMedicationBtn');
+            if (addButton && addButton.disabled) {
+                return;
+            }
             const container = document.getElementById('medicationsContainer');
             const newEntry = document.createElement('div');
             newEntry.className = 'medication-entry';
@@ -1167,6 +1348,103 @@
                 <button type="button" class="btn btn-remove btn-small" onclick="this.parentElement.remove()">Remove</button>
             `;
             container.appendChild(newEntry);
+        }
+
+        function getMedicationStatus() {
+            const medNone = document.getElementById('medNone');
+            const medUnknown = document.getElementById('medUnknown');
+            if (medNone?.checked) {
+                return 'none';
+            }
+            if (medUnknown?.checked) {
+                return 'unknown';
+            }
+            return 'list';
+        }
+
+        function updateMedicationStatus(changed) {
+            const medNone = document.getElementById('medNone');
+            const medUnknown = document.getElementById('medUnknown');
+            if (!medNone || !medUnknown) {
+                return;
+            }
+
+            if (changed === 'none' && medNone.checked) {
+                medUnknown.checked = false;
+            }
+            if (changed === 'unknown' && medUnknown.checked) {
+                medNone.checked = false;
+            }
+
+            const status = getMedicationStatus();
+            const disable = status === 'none' || status === 'unknown';
+            const addButton = document.getElementById('addMedicationBtn');
+            const entries = document.querySelectorAll('.medication-entry');
+
+            entries.forEach(entry => {
+                entry.querySelectorAll('input').forEach(input => {
+                    input.disabled = disable;
+                    if (disable) {
+                        input.value = '';
+                    }
+                });
+            });
+
+            if (disable && entries.length > 1) {
+                for (let i = entries.length - 1; i > 0; i -= 1) {
+                    entries[i].remove();
+                }
+            }
+
+            if (addButton) {
+                addButton.disabled = disable;
+            }
+        }
+
+        function getBpStatus() {
+            const bpNoCheck = document.getElementById('bpNoCheck');
+            const bpUnknown = document.getElementById('bpUnknown');
+            if (bpNoCheck?.checked) {
+                return 'noCheck';
+            }
+            if (bpUnknown?.checked) {
+                return 'unknown';
+            }
+            return 'list';
+        }
+
+        function updateBpStatus(changed) {
+            const bpNoCheck = document.getElementById('bpNoCheck');
+            const bpUnknown = document.getElementById('bpUnknown');
+            if (!bpNoCheck || !bpUnknown) {
+                return;
+            }
+
+            if (changed === 'noCheck' && bpNoCheck.checked) {
+                bpUnknown.checked = false;
+            }
+            if (changed === 'unknown' && bpUnknown.checked) {
+                bpNoCheck.checked = false;
+            }
+
+            const status = getBpStatus();
+            const disable = status === 'noCheck' || status === 'unknown';
+            const bpInputs = [
+                document.getElementById('bpSystolicMin'),
+                document.getElementById('bpSystolicMax'),
+                document.getElementById('bpDiastolicMin'),
+                document.getElementById('bpDiastolicMax')
+            ];
+
+            bpInputs.forEach(input => {
+                if (!input) {
+                    return;
+                }
+                input.disabled = disable;
+                if (disable) {
+                    input.value = '';
+                }
+            });
         }
 
         function toggleConditional(fieldId, show) {
@@ -1194,6 +1472,10 @@
 
         const steps = Array.from(document.querySelectorAll('.form-step'));
         let currentStep = 0;
+
+        function getScrollBehavior() {
+            return document.body.classList.contains('reduced-motion') ? 'auto' : 'smooth';
+        }
 
         function updateStep(index, shouldScroll = true) {
             if (!steps.length) {
@@ -1225,7 +1507,7 @@
             });
 
             if (shouldScroll) {
-                document.getElementById('questionnaireForm')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.getElementById('questionnaireForm')?.scrollIntoView({ behavior: getScrollBehavior(), block: 'start' });
             }
         }
 
@@ -1235,6 +1517,26 @@
 
         function prevStep() {
             updateStep(currentStep - 1);
+        }
+
+        function applyToggleClass(toggleId, className) {
+            const toggle = document.getElementById(toggleId);
+            if (!toggle) {
+                return;
+            }
+
+            const apply = () => {
+                document.body.classList.toggle(className, toggle.checked);
+            };
+
+            toggle.addEventListener('change', apply);
+            apply();
+        }
+
+        function setupPreferenceToggles() {
+            applyToggleClass('largeTextToggle', 'large-text');
+            applyToggleClass('highContrastToggle', 'high-contrast');
+            applyToggleClass('reduceMotionToggle', 'reduced-motion');
         }
 
         function resolveSubstanceSummary(current, prior, currentSummary, priorSummary) {
@@ -1349,7 +1651,84 @@
             );
         }
 
-        function generateSummary() {
+        function collectMissingSections() {
+            const missing = [];
+            const medStatus = getMedicationStatus();
+            const medInputs = Array.from(document.querySelectorAll('.medication-entry input'));
+            const hasMedValue = medInputs.some(input => input.value.trim());
+            if (!hasMedValue && medStatus === 'list') {
+                missing.push('Medicines and supplements');
+            }
+
+            const bpStatus = getBpStatus();
+            const bpValues = [
+                document.getElementById('bpSystolicMin')?.value,
+                document.getElementById('bpSystolicMax')?.value,
+                document.getElementById('bpDiastolicMin')?.value,
+                document.getElementById('bpDiastolicMax')?.value
+            ].some(value => value && value.trim());
+            if (!bpValues && bpStatus === 'list') {
+                missing.push('Home blood pressure');
+            }
+
+            const substanceAnswered = [
+                'tobaccoCurrent',
+                'tobaccoPrior',
+                'alcoholCurrent',
+                'alcoholPrior',
+                'drugCurrent',
+                'drugPrior'
+            ].some(name => document.querySelector(`input[name="${name}"]:checked`));
+            if (!substanceAnswered) {
+                missing.push('Substance use');
+            }
+
+            const stopbangAnswered = ['sb1', 'sb2', 'sb3', 'sb4', 'sb5', 'sb6', 'sb7', 'sb8']
+                .some(name => document.querySelector(`input[name="${name}"]:checked`));
+            if (!stopbangAnswered) {
+                missing.push('Sleep apnea screening');
+            }
+
+            const questions = document.getElementById('patientQuestions').value.trim();
+            if (!questions) {
+                missing.push('Questions for your visit (left blank)');
+            }
+
+            return missing;
+        }
+
+        function updateReviewPanel(summary) {
+            const reviewContent = document.getElementById('reviewContent');
+            if (reviewContent) {
+                reviewContent.textContent = summary;
+            }
+
+            const missing = collectMissingSections();
+            const missingWrap = document.getElementById('reviewMissing');
+            const completeWrap = document.getElementById('reviewComplete');
+            const missingList = document.getElementById('reviewMissingList');
+
+            if (missingList) {
+                missingList.innerHTML = '';
+                missing.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    missingList.appendChild(li);
+                });
+            }
+
+            if (missingWrap && completeWrap) {
+                if (missing.length) {
+                    missingWrap.hidden = false;
+                    completeWrap.hidden = true;
+                } else {
+                    missingWrap.hidden = true;
+                    completeWrap.hidden = false;
+                }
+            }
+        }
+
+        function generateSummary(goToReview = false) {
             const lines = [];
             const caregiverMode = document.getElementById('caregiverMode')?.checked;
 
@@ -1380,11 +1759,16 @@
                 }
             });
 
+            const medStatus = getMedicationStatus();
             lines.push('Medicines and supplements:');
-            if (meds.length > 0) {
+            if (medStatus === 'none') {
+                lines.push('- None');
+            } else if (medStatus === 'unknown') {
+                lines.push('- Not sure');
+            } else if (meds.length > 0) {
                 meds.forEach(item => lines.push(`- ${item}`));
             } else {
-                lines.push('- None');
+                lines.push('- Not provided');
             }
             lines.push('');
 
@@ -1393,8 +1777,13 @@
             const bpDiaMin = document.getElementById('bpDiastolicMin').value;
             const bpDiaMax = document.getElementById('bpDiastolicMax').value;
 
+            const bpStatus = getBpStatus();
             let bpLine = 'Home blood pressure (last week): ';
-            if (bpSysMin && bpSysMax && bpDiaMin && bpDiaMax) {
+            if (bpStatus === 'noCheck') {
+                bpLine += 'I do not check at home';
+            } else if (bpStatus === 'unknown') {
+                bpLine += 'Not sure';
+            } else if (bpSysMin && bpSysMax && bpDiaMin && bpDiaMax) {
                 bpLine += `${bpSysMin}-${bpSysMax} / ${bpDiaMin}-${bpDiaMax} mmHg`;
             } else if (bpSysMin && bpDiaMin) {
                 bpLine += `${bpSysMin} / ${bpDiaMin} mmHg`;
@@ -1454,11 +1843,22 @@
             const resultContainer = document.getElementById('resultContainer');
             document.getElementById('resultContent').textContent = summary;
             resultContainer.classList.add('active');
-            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            resultContainer.scrollIntoView({ behavior: getScrollBehavior(), block: 'nearest' });
+            updateReviewPanel(summary);
+
+            if (goToReview) {
+                updateStep(steps.length - 1);
+            }
+        }
+
+        function getSummaryContent() {
+            const primaryContent = document.getElementById('resultContent')?.textContent || '';
+            const reviewContent = document.getElementById('reviewContent')?.textContent || '';
+            return primaryContent.trim() ? primaryContent : reviewContent;
         }
 
         function copyToClipboard(event) {
-            const content = document.getElementById('resultContent').textContent;
+            const content = getSummaryContent();
             if (!content.trim()) {
                 alert('Please generate a summary first.');
                 return;
@@ -1481,7 +1881,7 @@
         }
 
         function downloadPDF() {
-            const content = document.getElementById('resultContent').textContent;
+            const content = getSummaryContent();
             if (!content.trim()) {
                 alert('Please generate a summary first.');
                 return;
@@ -1512,6 +1912,9 @@
         function resetForm() {
             document.getElementById('questionnaireForm').reset();
             document.getElementById('resultContainer').classList.remove('active');
+            document.getElementById('resultContent').textContent = '';
+            document.getElementById('reviewContent').textContent = '';
+            document.body.classList.remove('large-text', 'high-contrast', 'reduced-motion');
             document.querySelectorAll('.conditional-fields').forEach(field => {
                 field.classList.remove('active');
             });
@@ -1523,10 +1926,28 @@
                 entries[i].remove();
             }
 
+            const missingWrap = document.getElementById('reviewMissing');
+            const completeWrap = document.getElementById('reviewComplete');
+            const missingList = document.getElementById('reviewMissingList');
+            if (missingWrap) {
+                missingWrap.hidden = true;
+            }
+            if (completeWrap) {
+                completeWrap.hidden = true;
+            }
+            if (missingList) {
+                missingList.innerHTML = '';
+            }
+
+            updateMedicationStatus();
+            updateBpStatus();
             updateStep(0, false);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: getScrollBehavior() });
         }
 
+        setupPreferenceToggles();
+        updateMedicationStatus();
+        updateBpStatus();
         updateStep(0, false);
     </script>
 </body>
