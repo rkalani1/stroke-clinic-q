@@ -74,19 +74,6 @@
             border-color: rgba(255, 255, 255, 0.45);
         }
 
-        body.reduced-motion {
-            scroll-behavior: auto;
-        }
-
-        body.reduced-motion .section,
-        body.reduced-motion .progress-bar-fill,
-        body.reduced-motion .btn,
-        body.reduced-motion .radio-option label,
-        body.reduced-motion .conditional-fields {
-            animation: none;
-            transition: none;
-        }
-
         .page {
             min-height: 100vh;
         }
@@ -797,10 +784,6 @@
             <div class="hero-inner">
                 <span class="hero-tag">UW Medicine / Harborview Medical Center</span>
                 <h1>Stroke Clinic Pre-Visit Questionnaire</h1>
-                <p>Fill this out at your pace. You can skip any question or choose Not sure, then generate a MyChart-ready message.</p>
-                <div class="hero-meta">
-                    <span class="hero-chip">Estimated time: 5 to 7 minutes</span>
-                </div>
             </div>
         </header>
 
@@ -809,8 +792,8 @@
                 <form id="questionnaireForm" class="form-stack">
                     <div class="card helper-card">
                         <div>
-                            <p class="helper-title">Take your time. You can skip any question or choose Not sure.</p>
-                            <p class="helper-text">If you are filling this out for someone else, turn on caregiver mode.</p>
+                            <p class="helper-title">Caregiver mode</p>
+                            <p class="helper-text">Turn this on if you are filling this out for someone else.</p>
                         </div>
                         <div class="toggle-list">
                             <label class="toggle-row">
@@ -824,10 +807,6 @@
                             <label class="toggle-row">
                                 <input type="checkbox" id="highContrastToggle">
                                 <span>High contrast</span>
-                            </label>
-                            <label class="toggle-row">
-                                <input type="checkbox" id="reduceMotionToggle">
-                                <span>Reduce motion</span>
                             </label>
                         </div>
                     </div>
@@ -924,7 +903,7 @@
                     <div class="form-step" data-step-title="Substance use">
                         <section class="section card" style="--delay: 0ms;">
                             <h2 class="section-title">Substance use and exposure</h2>
-                            <p class="helper-text">Answer what you can. If you are not sure, choose Not sure.</p>
+                            <p class="helper-text">Answer what you can.</p>
 
                             <div class="subsection">
                                 <h3 class="subsection-title">Tobacco</h3>
@@ -1127,7 +1106,7 @@
                     <div class="form-step" data-step-title="Sleep apnea screening">
                         <section class="section card" style="--delay: 0ms;">
                             <h2 class="section-title">Sleep apnea screening (STOP-BANG)</h2>
-                            <p class="helper-text">STOP-BANG is a quick screen for sleep apnea. Answer what you can. If you are not sure, choose Not sure.</p>
+                            <p class="helper-text">STOP-BANG is a quick screen for sleep apnea. Answer what you can.</p>
                             <div class="question-grid">
                                 <div class="question-card" role="group" aria-labelledby="sb1Label">
                                     <p id="sb1Label">Do you snore loudly (louder than talking or heard through a closed door)?</p>
@@ -1473,10 +1452,6 @@
         const steps = Array.from(document.querySelectorAll('.form-step'));
         let currentStep = 0;
 
-        function getScrollBehavior() {
-            return document.body.classList.contains('reduced-motion') ? 'auto' : 'smooth';
-        }
-
         function updateStep(index, shouldScroll = true) {
             if (!steps.length) {
                 return;
@@ -1507,7 +1482,7 @@
             });
 
             if (shouldScroll) {
-                document.getElementById('questionnaireForm')?.scrollIntoView({ behavior: getScrollBehavior(), block: 'start' });
+                document.getElementById('questionnaireForm')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
@@ -1536,7 +1511,6 @@
         function setupPreferenceToggles() {
             applyToggleClass('largeTextToggle', 'large-text');
             applyToggleClass('highContrastToggle', 'high-contrast');
-            applyToggleClass('reduceMotionToggle', 'reduced-motion');
         }
 
         function resolveSubstanceSummary(current, prior, currentSummary, priorSummary) {
@@ -1843,7 +1817,7 @@
             const resultContainer = document.getElementById('resultContainer');
             document.getElementById('resultContent').textContent = summary;
             resultContainer.classList.add('active');
-            resultContainer.scrollIntoView({ behavior: getScrollBehavior(), block: 'nearest' });
+            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             updateReviewPanel(summary);
 
             if (goToReview) {
@@ -1914,7 +1888,7 @@
             document.getElementById('resultContainer').classList.remove('active');
             document.getElementById('resultContent').textContent = '';
             document.getElementById('reviewContent').textContent = '';
-            document.body.classList.remove('large-text', 'high-contrast', 'reduced-motion');
+            document.body.classList.remove('large-text', 'high-contrast');
             document.querySelectorAll('.conditional-fields').forEach(field => {
                 field.classList.remove('active');
             });
@@ -1942,7 +1916,7 @@
             updateMedicationStatus();
             updateBpStatus();
             updateStep(0, false);
-            window.scrollTo({ top: 0, behavior: getScrollBehavior() });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         setupPreferenceToggles();
