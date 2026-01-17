@@ -175,16 +175,12 @@
         .form-stack {
             display: grid;
             gap: 22px;
-        }
-
-        .form-step {
-            display: none;
-            gap: 22px;
             counter-reset: section;
         }
 
-        .form-step.active {
+        .form-step {
             display: grid;
+            gap: 22px;
         }
 
         .helper-card {
@@ -811,17 +807,7 @@
                         </div>
                     </div>
 
-                    <div class="card stepper" aria-live="polite">
-                        <div class="stepper-header">
-                            <span id="stepLabel" class="step-label">Step 1 of 6</span>
-                            <span id="stepTitle" class="step-title">Primary care and medicines</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div id="progressFill" class="progress-bar-fill"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-step active" data-step-title="Primary care and medicines">
+                    <div class="form-step" data-step-title="Primary care and medicines">
                         <section class="section card" style="--delay: 0ms;">
                             <h2 class="section-title">Primary care</h2>
                             <div class="form-group">
@@ -850,10 +836,6 @@
                             </div>
                         </section>
 
-                        <div class="step-actions">
-                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
-                            <button type="button" class="btn btn-primary" data-action="next-step" onclick="nextStep()">Next</button>
-                        </div>
                     </div>
 
                     <div class="form-step" data-step-title="Home blood pressure">
@@ -886,10 +868,6 @@
                             </div>
                         </section>
 
-                        <div class="step-actions">
-                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
-                            <button type="button" class="btn btn-primary" data-action="next-step" onclick="nextStep()">Next</button>
-                        </div>
                     </div>
 
                     <div class="form-step" data-step-title="Substance use">
@@ -1065,10 +1043,6 @@
                             </div>
                         </section>
 
-                        <div class="step-actions">
-                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
-                            <button type="button" class="btn btn-primary" data-action="next-step" onclick="nextStep()">Next</button>
-                        </div>
                     </div>
 
                     <div class="form-step" data-step-title="Sleep apnea screening">
@@ -1183,10 +1157,6 @@
                             </div>
                         </section>
 
-                        <div class="step-actions">
-                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
-                            <button type="button" class="btn btn-primary" data-action="next-step" onclick="nextStep()">Next</button>
-                        </div>
                     </div>
 
                     <div class="form-step" data-step-title="Questions for your visit">
@@ -1198,16 +1168,18 @@
                             </div>
                         </section>
 
-                        <div class="step-actions">
-                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
-                            <button type="button" class="btn btn-primary" onclick="generateSummary(true)">Review MyChart message</button>
-                        </div>
                     </div>
 
                     <div class="form-step" data-step-title="Review and confirm">
-                        <section class="section card review-card" style="--delay: 0ms;">
+                        <section id="reviewSection" class="section card review-card" style="--delay: 0ms;">
                             <h2 class="section-title">Review and confirm</h2>
-                            <p class="helper-text">Check your message and see any sections that might be missing.</p>
+                            <p class="helper-text">Generate your message when ready. You can edit any answers above and generate again.</p>
+                            <div class="result-actions">
+                                <button type="button" class="btn btn-primary" onclick="generateSummary(true)">Generate MyChart message</button>
+                                <button type="button" class="btn btn-ghost" onclick="copyToClipboard(event)">Copy message</button>
+                                <button type="button" class="btn btn-ghost" onclick="downloadPDF()">Download PDF</button>
+                                <button type="button" class="btn btn-ghost" onclick="resetForm()">Start over</button>
+                            </div>
                             <div id="reviewMissing" class="review-alert" hidden>
                                 <p>Sections that look incomplete</p>
                                 <ul id="reviewMissingList" class="review-list"></ul>
@@ -1216,12 +1188,6 @@
                             <div id="reviewContent" class="result-content review-content" aria-live="polite"></div>
                         </section>
 
-                        <div class="step-actions">
-                            <button type="button" class="btn btn-ghost" data-action="prev-step" onclick="prevStep()">Back</button>
-                            <button type="button" class="btn btn-primary" onclick="copyToClipboard(event)">Copy message</button>
-                            <button type="button" class="btn btn-ghost" onclick="downloadPDF()">Download PDF</button>
-                            <button type="button" class="btn btn-ghost" onclick="resetForm()">Start over</button>
-                        </div>
                     </div>
                 </form>
 
@@ -1361,49 +1327,8 @@
             }
         }
 
-        const steps = Array.from(document.querySelectorAll('.form-step'));
-        let currentStep = 0;
-
-        function updateStep(index, shouldScroll = true) {
-            if (!steps.length) {
-                return;
-            }
-            const totalSteps = steps.length;
-            currentStep = Math.min(Math.max(index, 0), totalSteps - 1);
-
-            steps.forEach((step, stepIndex) => {
-                step.classList.toggle('active', stepIndex === currentStep);
-            });
-
-            const stepLabel = document.getElementById('stepLabel');
-            const stepTitle = document.getElementById('stepTitle');
-            const progressFill = document.getElementById('progressFill');
-
-            if (stepLabel) {
-                stepLabel.textContent = `Step ${currentStep + 1} of ${totalSteps}`;
-            }
-            if (stepTitle) {
-                stepTitle.textContent = steps[currentStep].dataset.stepTitle || '';
-            }
-            if (progressFill) {
-                progressFill.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
-            }
-
-            document.querySelectorAll('[data-action="prev-step"]').forEach(button => {
-                button.disabled = currentStep === 0;
-            });
-
-            if (shouldScroll) {
-                document.getElementById('questionnaireForm')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        function nextStep() {
-            updateStep(currentStep + 1);
-        }
-
-        function prevStep() {
-            updateStep(currentStep - 1);
+        function scrollToReview() {
+            document.getElementById('reviewSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function applyToggleClass(toggleId, className) {
@@ -1719,11 +1644,10 @@
             const resultContainer = document.getElementById('resultContainer');
             document.getElementById('resultContent').textContent = summary;
             resultContainer.classList.add('active');
-            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             updateReviewPanel(summary);
 
             if (goToReview) {
-                updateStep(steps.length - 1);
+                scrollToReview();
             }
         }
 
@@ -1817,14 +1741,12 @@
 
             updateMedicationStatus();
             updateBpStatus();
-            updateStep(0, false);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         setupPreferenceToggles();
         updateMedicationStatus();
         updateBpStatus();
-        updateStep(0, false);
     </script>
 </body>
 </html>
