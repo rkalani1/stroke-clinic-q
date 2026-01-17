@@ -158,6 +158,12 @@
             gap: 24px;
         }
 
+        .side-stack {
+            display: grid;
+            gap: 24px;
+            align-content: start;
+        }
+
         @media (min-width: 980px) {
             .layout {
                 grid-template-columns: minmax(0, 1fr) 340px;
@@ -748,7 +754,7 @@
 
             .result-container {
                 position: static;
-                margin-top: 20px;
+                margin-top: 0;
             }
         }
 
@@ -839,52 +845,6 @@
         <main class="container">
             <div class="layout">
                 <form id="questionnaireForm" class="form-stack">
-                    <section class="card template-card" aria-labelledby="mychartTemplateTitle">
-                        <div class="template-header">
-                            <div>
-                                <h2 id="mychartTemplateTitle" class="template-title">MyChart message template</h2>
-                                <p class="helper-text">Copy and paste this message into MyChart so patients can reply with their answers.</p>
-                            </div>
-                            <div class="template-actions">
-                                <button type="button" class="btn btn-primary" onclick="copyTemplateToClipboard(event)">Copy template</button>
-                            </div>
-                        </div>
-                        <pre id="mychartTemplate" class="template-content">Subject: Stroke Clinic Pre-Visit Questionnaire
-
-Hello,
-
-To help us prepare for your visit, please reply to this message with the answers below. If a question does not apply, write "Not applicable" or "Unknown."
-
-1) Are you filling this out yourself or as a caregiver for someone else?
-2) Primary care doctor (if you have one):
-3) Medicines and supplements (include dose and how often). If none, write "None":
-4) Home blood pressure in the last week (lowest and highest readings). If you do not check at home, say "I do not check":
-   - Top number (systolic) range:
-   - Bottom number (diastolic) range:
-5) Tobacco:
-   - Do you use tobacco now? If yes, type and amount per day:
-   - Did you use tobacco in the past? If yes, years and packs per day:
-6) Alcohol:
-   - Do you drink alcohol now? If yes, type, drinks per week, and years:
-   - Did you drink alcohol in the past? If yes, type and how long/how much:
-7) Recreational or non-prescribed drugs:
-   - Do you use now? If yes, which, how often, and route:
-   - Did you use in the past? If yes, which, how long, and route:
-8) Sleep apnea screening (Yes/No):
-   - Snore loudly?
-   - Feel tired or sleepy during the day?
-   - Anyone seen you stop breathing during sleep?
-   - High blood pressure or on medicine?
-   - BMI over 35?
-   - Older than 50?
-   - Neck size over 16 inches (40 cm)?
-   - Male?
-9) Questions for your visit (most important questions you want answered):
-
-Thank you.</pre>
-                        <p class="helper-text">Tip: Patients can also complete the questionnaire below if they prefer.</p>
-                    </section>
-
                     <div class="card helper-card">
                         <div>
                             <p class="helper-title">Caregiver mode</p>
@@ -1290,21 +1250,68 @@ Thank you.</pre>
                     </div>
                 </form>
 
-                <aside id="resultContainer" class="card result-container">
-                    <div class="result-empty">
-                        <h3 class="result-title">MyChart message</h3>
-                        <p>Generate a summary to preview and copy your message.</p>
-                    </div>
-                    <div class="result-body">
-                        <h3 class="result-title">MyChart message ready to copy</h3>
-                        <p class="result-note">Copy and paste this into an Epic MyChart message.</p>
-                        <div id="resultContent" class="result-content" aria-live="polite"></div>
-                        <div class="result-actions">
-                            <button class="btn btn-primary" type="button" onclick="copyToClipboard(event)">Copy message</button>
-                            <button class="btn btn-ghost" type="button" onclick="downloadPDF()">Download PDF</button>
-                            <button class="btn btn-ghost" type="button" onclick="resetForm()">Start over</button>
+                <aside class="side-stack" aria-label="MyChart tools">
+                    <section class="card template-card" aria-labelledby="mychartTemplateTitle">
+                        <div class="template-header">
+                            <div>
+                                <h2 id="mychartTemplateTitle" class="template-title">MyChart message template</h2>
+                            </div>
+                            <div class="template-actions">
+                                <button type="button" class="btn btn-primary" onclick="copyTemplateToClipboard(event)">Copy template</button>
+                            </div>
                         </div>
-                    </div>
+                        <pre id="mychartTemplate" class="template-content">Subject: Stroke Clinic Pre-Visit Questionnaire
+
+Hello,
+
+To help us prepare for your visit, please reply to this message with the answers below. If a question does not apply, write "Not applicable" or "Unknown."
+
+1) Are you filling this out yourself or as a caregiver for someone else?
+2) Primary care doctor (if you have one):
+3) Medicines and supplements (include dose and how often). If none, write "None":
+4) Home blood pressure in the last week (lowest and highest readings). If you do not check at home, say "I do not check":
+   - Top number (systolic) range:
+   - Bottom number (diastolic) range:
+5) Tobacco:
+   - Do you use tobacco now? If yes, type and amount per day:
+   - Did you use tobacco in the past? If yes, years and packs per day:
+6) Alcohol:
+   - Do you drink alcohol now? If yes, type, drinks per week, and years:
+   - Did you drink alcohol in the past? If yes, type and how long/how much:
+7) Recreational or non-prescribed drugs:
+   - Do you use now? If yes, which, how often, and route:
+   - Did you use in the past? If yes, which, how long, and route:
+8) Sleep apnea screening (Yes/No):
+   - Snore loudly?
+   - Feel tired or sleepy during the day?
+   - Anyone seen you stop breathing during sleep?
+   - High blood pressure or on medicine?
+   - BMI over 35?
+   - Older than 50?
+   - Neck size over 16 inches (40 cm)?
+   - Male?
+9) Questions for your visit (most important questions you want answered):
+
+Thank you.</pre>
+                        <p class="helper-text">Tip: Patients can also complete the questionnaire on this page if they prefer.</p>
+                    </section>
+
+                    <section id="resultContainer" class="card result-container">
+                        <div class="result-empty">
+                            <h3 class="result-title">MyChart message</h3>
+                            <p>Generate a summary to preview and copy your message.</p>
+                        </div>
+                        <div class="result-body">
+                            <h3 class="result-title">MyChart message ready to copy</h3>
+                            <p class="result-note">Copy and paste this into an Epic MyChart message.</p>
+                            <div id="resultContent" class="result-content" aria-live="polite"></div>
+                            <div class="result-actions">
+                                <button class="btn btn-primary" type="button" onclick="copyToClipboard(event)">Copy message</button>
+                                <button class="btn btn-ghost" type="button" onclick="downloadPDF()">Download PDF</button>
+                                <button class="btn btn-ghost" type="button" onclick="resetForm()">Start over</button>
+                            </div>
+                        </div>
+                    </section>
                 </aside>
             </div>
         </main>
