@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stroke Clinic Pre-Visit Questionnaire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1f2a2e;
+            --muted: #5f6d72;
+            --accent: #0f6b6b;
+            --accent-strong: #0b5151;
+            --accent-warm: #d18450;
+            --accent-soft: rgba(15, 107, 107, 0.14);
+            --bg: #f6f1e8;
+            --panel: #ffffff;
+            --panel-alt: #fdfaf4;
+            --outline: #e3ddd1;
+            --shadow: 0 20px 45px rgba(15, 61, 62, 0.12);
+            --radius: 18px;
+            --base-font: clamp(16px, 0.4vw + 15px, 18px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Source Sans 3", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 10% 20%, rgba(209, 132, 80, 0.18), transparent 40%),
+                radial-gradient(circle at 85% 5%, rgba(15, 107, 107, 0.14), transparent 45%),
+                linear-gradient(120deg, #f6f1e8 0%, #eef4f3 100%);
+            min-height: 100vh;
+            font-size: var(--base-font);
+            line-height: 1.7;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body.large-text {
+            --base-font: clamp(18px, 0.6vw + 16px, 21px);
+        }
+
+        body.high-contrast {
+            --ink: #0b0b0b;
+            --muted: #1f1f1f;
+            --accent: #0b1f2a;
+            --accent-strong: #08141c;
+            --accent-warm: #b04b1a;
+            --accent-soft: rgba(11, 31, 42, 0.2);
+            --bg: #ffffff;
+            --panel: #ffffff;
+            --panel-alt: #f5f5f5;
+            --outline: #111111;
+            --shadow: none;
+        }
+
+        body.high-contrast {
+            background: #ffffff;
+        }
+
+        body.high-contrast .hero {
+            background: #0b1f2a;
+        }
+
+        body.high-contrast .hero-chip,
+        body.high-contrast .hero-tag {
+            border-color: rgba(255, 255, 255, 0.45);
+        }
+
+        .page {
+            min-height: 100vh;
+        }
+
+        .hero {
+            position: relative;
+            padding: 64px 20px 92px;
+            color: #f9fbfb;
+            background: linear-gradient(120deg, #0f6b6b 0%, #0d5660 45%, #2c5d72 100%);
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 30%, rgba(255, 255, 255, 0.12), transparent 35%),
+                radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.1), transparent 45%);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .hero-tag {
+            align-self: flex-start;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-size: 0.7rem;
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .hero h1 {
+            font-family: "Fraunces", serif;
+            font-size: clamp(2.1rem, 3.5vw, 3.4rem);
+            line-height: 1.08;
+        }
+
+        .hero p {
+            max-width: 640px;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .hero-chip {
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            font-size: 0.85rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: -46px auto 60px;
+            padding: 0 20px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .layout {
+            display: grid;
+            gap: 24px;
+        }
+
+        .side-stack {
+            display: grid;
+            gap: 24px;
+            align-content: start;
+        }
+
+        @media (min-width: 980px) {
+            .layout {
+                grid-template-columns: minmax(0, 1fr) 340px;
+                align-items: start;
+            }
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--outline);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-stack {
+            display: grid;
+            gap: 22px;
+            counter-reset: section;
+        }
+
+        .form-step {
+            display: grid;
+            gap: 22px;
+        }
+
+        .helper-card {
+            padding: 20px;
+            display: grid;
+            gap: 12px;
+            background: var(--panel-alt);
+        }
+
+        .helper-title {
+            font-weight: 600;
+            font-size: 1.02rem;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--ink);
+            margin: 0;
+        }
+
+        .toggle-row input {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--accent);
+        }
+
+        .toggle-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .stepper {
+            padding: 16px 18px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .stepper-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .step-label {
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-size: 0.72rem;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--outline);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+            transition: width 0.3s ease;
+        }
+
+        .section {
+            padding: 24px;
+            opacity: 0;
+            transform: translateY(14px);
+            animation: rise 0.6s ease forwards;
+            animation-delay: var(--delay, 0ms);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: "Fraunces", serif;
+            font-size: 1.25rem;
+            margin-bottom: 18px;
+        }
+
+        .section-title::before {
+            counter-increment: section;
+            content: counter(section, decimal-leading-zero);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .subsection {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px dashed var(--outline);
+        }
+
+        .subsection:first-of-type {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        .subsection-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--accent-strong);
+            margin-bottom: 12px;
+        }
+
+        .step-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .step-actions .btn {
+            min-width: 160px;
+        }
+
+        @keyframes rise {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--outline);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #fff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        .helper-text {
+            font-size: 0.95rem;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        .choice-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .choice-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--outline);
+            background: #fff;
+        }
+
+        .choice-option input {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--accent);
+        }
+
+        .medication-entry {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 10px;
+            margin-bottom: 12px;
+            align-items: start;
+        }
+
+        .medication-input {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 12px 20px rgba(15, 107, 107, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-strong);
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--accent-warm);
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #bf723e;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border-color: var(--outline);
+            color: var(--ink);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-small {
+            padding: 10px 16px;
+            font-size: 0.95rem;
+        }
+
+        .btn-remove {
+            background: #c84c39;
+            color: #fff;
+            align-self: stretch;
+        }
+
+        .btn-remove:hover {
+            background: #a63d2e;
+        }
+
+        .bp-inputs {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .bp-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bp-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .bp-separator {
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .radio-group {
+            display: inline-flex;
+            gap: 8px;
+            padding: 8px;
+            border-radius: 999px;
+            background: var(--panel-alt);
+            border: 1px solid var(--outline);
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            position: relative;
+        }
+
+        .radio-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .radio-option label {
+            margin: 0;
+            padding: 10px 18px;
+            border-radius: 999px;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .radio-option input:checked + label {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .radio-option input:focus-visible + label {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .conditional-fields {
+            margin-top: 12px;
+            padding: 0 14px;
+            border-left: 3px solid var(--accent-soft);
+            background: var(--panel-alt);
+            border-radius: 12px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+        }
+
+        .conditional-fields.active {
+            padding: 14px;
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        .question-grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        .question-card {
+            display: grid;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid var(--outline);
+            background: #fff;
+        }
+
+        .question-card:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .question-card p {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .question-card .radio-group {
+            margin-bottom: 0;
+        }
+
+        .review-card {
+            display: grid;
+            gap: 16px;
+        }
+
+        .review-alert {
+            padding: 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(209, 132, 80, 0.35);
+            background: rgba(209, 132, 80, 0.18);
+        }
+
+        .review-alert p {
+            margin: 0 0 8px;
+            font-weight: 600;
+        }
+
+        .review-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 8px;
+        }
+
+        .review-list li {
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px dashed var(--outline);
+            background: #fff;
+            font-weight: 600;
+        }
+
+        .review-complete {
+            padding: 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(15, 107, 107, 0.25);
+            background: rgba(15, 107, 107, 0.12);
+            font-weight: 600;
+            color: var(--accent-strong);
+        }
+
+        .review-content {
+            max-height: 360px;
+        }
+
+        .result-container {
+            padding: 20px;
+            position: sticky;
+            top: 24px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .result-empty {
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .result-empty p {
+            margin-top: 8px;
+        }
+
+        .result-title {
+            font-family: "Fraunces", serif;
+            font-size: 1.3rem;
+        }
+
+        .result-note {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .result-content {
+            background: #fbfaf6;
+            border: 1px dashed var(--outline);
+            border-radius: 12px;
+            padding: 16px;
+            white-space: pre-wrap;
+            font-size: 1rem;
+            line-height: 1.7;
+            max-height: 420px;
+            overflow-y: auto;
+        }
+
+        .template-card {
+            padding: 20px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .template-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .template-title {
+            font-family: "Fraunces", serif;
+            font-size: 1.35rem;
+            margin: 0;
+        }
+
+        .template-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .template-actions .btn {
+            white-space: nowrap;
+        }
+
+        .template-content {
+            background: #fbfaf6;
+            border: 1px dashed var(--outline);
+            border-radius: 12px;
+            padding: 16px;
+            white-space: pre-wrap;
+            font-size: 0.98rem;
+            line-height: 1.65;
+        }
+
+        .result-actions {
+            display: grid;
+            gap: 10px;
+        }
+
+        .result-actions .btn {
+            width: 100%;
+        }
+
+        .result-container:not(.active) .result-body {
+            display: none;
+        }
+
+        .result-container.active .result-empty {
+            display: none;
+        }
+
+        .pack-years-display {
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: rgba(15, 107, 107, 0.1);
+            border-radius: 12px;
+            font-weight: 600;
+            color: var(--accent-strong);
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                margin-top: -36px;
+            }
+
+            .result-container {
+                position: static;
+                margin-top: 0;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .form-row,
+            .medication-input,
+            .bp-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .medication-entry {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-remove {
+                width: 100%;
+            }
+
+            .review-content {
+                max-height: none;
+            }
+
+            .step-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .step-actions .btn {
+                width: 100%;
+            }
+
+            .template-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .template-actions {
+                width: 100%;
+            }
+
+            .template-actions .btn {
+                width: 100%;
+            }
+
+            .hero {
+                padding: 54px 18px 76px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .radio-group {
+                width: 100%;
+            }
+
+            .radio-option {
+                flex: 1 1 30%;
+            }
+
+            .radio-option label {
+                width: 100%;
+                text-align: center;
+            }
+
+            .stepper-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .section {
+                opacity: 1;
+                transform: none;
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="hero">
+            <div class="hero-inner">
+                <span class="hero-tag">Synthetic public demo - not an official system</span>
+                <h1>Stroke Clinic Pre-Visit Questionnaire Demo</h1>
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="layout">
+                <form id="questionnaireForm" class="form-stack">
+                    <div class="card helper-card" role="alert" style="border-color:#f59e0b;background:#fffbeb;color:#78350f;">
+                        <div>
+                            <p class="helper-title">Public demo boundary</p>
+                            <p class="helper-text" style="color:#78350f;">Do not enter real patient information, PHI, medication lists, visit questions, or contact details on this public GitHub Pages demo. Real pre-visit intake should occur through approved messaging/Epic or another approved patient-communication workflow.</p>
+                        </div>
+                    </div>
+                    <div class="card helper-card">
+                        <div>
+                            <p class="helper-title">Caregiver mode</p>
+                            <p class="helper-text">Turn this on if you are filling this out for someone else.</p>
+                        </div>
+                        <div class="toggle-list">
+                            <label class="toggle-row">
+                                <input type="checkbox" id="caregiverMode">
+                                <span>Caregiver mode: I am filling this out for someone else</span>
+                            </label>
+                            <label class="toggle-row">
+                                <input type="checkbox" id="largeTextToggle">
+                                <span>Large text</span>
+                            </label>
+                            <label class="toggle-row">
+                                <input type="checkbox" id="highContrastToggle">
+                                <span>High contrast</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-step" data-step-title="Primary care and medicines">
+                        <section class="section card" style="--delay: 0ms;">
+                            <h2 class="section-title">Primary care</h2>
+                            <div class="form-group">
+                                <label for="pcpName">Primary care doctor (if you have one)</label>
+                                <input type="text" id="pcpName" placeholder="Dr. Jane Smith">
+                            </div>
+                        </section>
+
+                        <section class="section card" style="--delay: 60ms;">
+                            <h2 class="section-title">Medicines and supplements</h2>
+                            <div id="medicationsContainer">
+                                <div class="medication-entry">
+                                    <div class="medication-input">
+                                        <input type="text" class="med-name" placeholder="Medicine name (example: atorvastatin)">
+                                        <input type="text" class="med-dose" placeholder="Dose (example: 40 mg once daily)">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" id="addMedicationBtn" class="btn btn-secondary btn-small" onclick="addMedication()">+ Add another medicine</button>
+                            <p class="helper-text">Include prescriptions, over-the-counter medicines, and vitamins.</p>
+                            <div class="choice-list">
+                                <label class="choice-option">
+                                    <input type="checkbox" id="medNone" onchange="updateMedicationStatus('none')">
+                                    <span>I do not take any medicines right now</span>
+                                </label>
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <div class="form-step" data-step-title="Home blood pressure">
+                        <section class="section card" style="--delay: 0ms;">
+                            <h2 class="section-title">Home blood pressure in the last week</h2>
+                            <div class="bp-inputs">
+                                <div class="bp-group">
+                                    <label>Top number (systolic)</label>
+                                    <div class="bp-row">
+                                        <input type="number" id="bpSystolicMin" placeholder="Lowest" min="60" max="250">
+                                        <span class="bp-separator">to</span>
+                                        <input type="number" id="bpSystolicMax" placeholder="Highest" min="60" max="250">
+                                    </div>
+                                </div>
+                                <div class="bp-group">
+                                    <label>Bottom number (diastolic)</label>
+                                    <div class="bp-row">
+                                        <input type="number" id="bpDiastolicMin" placeholder="Lowest" min="40" max="150">
+                                        <span class="bp-separator">to</span>
+                                        <input type="number" id="bpDiastolicMax" placeholder="Highest" min="40" max="150">
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="helper-text">Top number is systolic, bottom number is diastolic. If you check at home, enter the lowest and highest readings you saw.</p>
+                            <div class="choice-list">
+                                <label class="choice-option">
+                                    <input type="checkbox" id="bpNoCheck" onchange="updateBpStatus('noCheck')">
+                                    <span>I do not check my blood pressure at home</span>
+                                </label>
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <div class="form-step" data-step-title="Substance use">
+                        <section class="section card" style="--delay: 0ms;">
+                            <h2 class="section-title">Substance use and exposure</h2>
+                            <p class="helper-text">Answer what you can.</p>
+
+                            <div class="subsection">
+                                <h3 class="subsection-title">Tobacco</h3>
+                                <div class="form-group">
+                                    <label>Do you use tobacco now?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="tobaccoCurrentYes" name="tobaccoCurrent" value="yes" onchange="toggleConditional('tobaccoCurrentFields', true)">
+                                            <label for="tobaccoCurrentYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="tobaccoCurrentNo" name="tobaccoCurrent" value="no" onchange="toggleConditional('tobaccoCurrentFields', false)">
+                                            <label for="tobaccoCurrentNo">No</label>
+                                        </div>
+                                    </div>
+                                    <div id="tobaccoCurrentFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="tobaccoType">Type (cigarettes, cigars, chewing tobacco)</label>
+                                            <input type="text" id="tobaccoType" placeholder="Example: cigarettes">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tobaccoAmount">How much per day</label>
+                                            <input type="text" id="tobaccoAmount" placeholder="Example: 1 pack">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Did you use tobacco in the past?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="tobaccoPriorYes" name="tobaccoPrior" value="yes" onchange="toggleConditional('tobaccoPriorFields', true)">
+                                            <label for="tobaccoPriorYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="tobaccoPriorNo" name="tobaccoPrior" value="no" onchange="toggleConditional('tobaccoPriorFields', false)">
+                                            <label for="tobaccoPriorNo">No</label>
+                                        </div>
+                                    </div>
+                                    <div id="tobaccoPriorFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="tobaccoPriorYears">How many years</label>
+                                            <input type="number" id="tobaccoPriorYears" placeholder="Example: 15" min="0" oninput="calculatePackYears()">
+                                        </div>
+                                        <div class="form-group">
+                                        <label for="tobaccoPriorPacks">Packs per day (for cigarettes)</label>
+                                        <input type="number" id="tobaccoPriorPacks" placeholder="Example: 1.5" min="0" step="0.1" oninput="calculatePackYears()">
+                                    </div>
+                                    <div id="packYearsDisplay" class="pack-years-display" style="display: none;"></div>
+                                    <p class="helper-text">Pack-years = packs per day x years.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="subsection">
+                                <h3 class="subsection-title">Alcohol</h3>
+                                <div class="form-group">
+                                    <label>Do you drink alcohol now?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="alcoholCurrentYes" name="alcoholCurrent" value="yes" onchange="toggleConditional('alcoholCurrentFields', true)">
+                                            <label for="alcoholCurrentYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="alcoholCurrentNo" name="alcoholCurrent" value="no" onchange="toggleConditional('alcoholCurrentFields', false)">
+                                            <label for="alcoholCurrentNo">No</label>
+                                        </div>
+                                    </div>
+                                    <div id="alcoholCurrentFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="alcoholType">Type (beer, wine, liquor)</label>
+                                            <input type="text" id="alcoholType" placeholder="Example: beer">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="alcoholDrinks">Average drinks per week</label>
+                                            <input type="number" id="alcoholDrinks" placeholder="Example: 5" min="0">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="alcoholYears">How many years</label>
+                                            <input type="number" id="alcoholYears" placeholder="Example: 10" min="0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Did you drink alcohol in the past?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="alcoholPriorYes" name="alcoholPrior" value="yes" onchange="toggleConditional('alcoholPriorFields', true)">
+                                            <label for="alcoholPriorYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="alcoholPriorNo" name="alcoholPrior" value="no" onchange="toggleConditional('alcoholPriorFields', false)">
+                                            <label for="alcoholPriorNo">No</label>
+                                        </div>
+                                    </div>
+                                    <div id="alcoholPriorFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="alcoholPriorType">Type (beer, wine, liquor)</label>
+                                            <input type="text" id="alcoholPriorType" placeholder="Example: wine">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="alcoholPriorDuration">How long and how much</label>
+                                            <input type="text" id="alcoholPriorDuration" placeholder="Example: 15 years, about 10 drinks/week">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="subsection">
+                                <h3 class="subsection-title">Recreational or non-prescribed drugs</h3>
+                                <div class="form-group">
+                                    <label>Do you use recreational or non-prescribed drugs now?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="drugCurrentYes" name="drugCurrent" value="yes" onchange="toggleConditional('drugCurrentFields', true)">
+                                            <label for="drugCurrentYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="drugCurrentNo" name="drugCurrent" value="no" onchange="toggleConditional('drugCurrentFields', false)">
+                                            <label for="drugCurrentNo">No</label>
+                                        </div>
+                                    </div>
+                                    <div id="drugCurrentFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="drugCurrentType">Which drug(s)</label>
+                                            <input type="text" id="drugCurrentType" placeholder="Example: marijuana">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="drugCurrentFreq">How often</label>
+                                            <input type="text" id="drugCurrentFreq" placeholder="Example: weekly">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="drugCurrentRoute">How it is used (oral, inhaled, IV)</label>
+                                            <input type="text" id="drugCurrentRoute" placeholder="Example: inhaled">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Did you use recreational or non-prescribed drugs in the past?</label>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="drugPriorYes" name="drugPrior" value="yes" onchange="toggleConditional('drugPriorFields', true)">
+                                            <label for="drugPriorYes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="drugPriorNo" name="drugPrior" value="no" onchange="toggleConditional('drugPriorFields', false)">
+                                            <label for="drugPriorNo">No</label>
+                                        </div>
+                                    </div>
+                                    <div id="drugPriorFields" class="conditional-fields">
+                                        <div class="form-group">
+                                            <label for="drugPriorType">Which drug(s)</label>
+                                            <input type="text" id="drugPriorType" placeholder="Example: marijuana">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="drugPriorDuration">How long</label>
+                                            <input type="text" id="drugPriorDuration" placeholder="Example: 5 years, stopped 2010">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="drugPriorRoute">How it was used (oral, inhaled, IV)</label>
+                                            <input type="text" id="drugPriorRoute" placeholder="Example: oral">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <div class="form-step" data-step-title="Sleep apnea screening">
+                        <section class="section card" style="--delay: 0ms;">
+                            <h2 class="section-title">Sleep apnea screening (STOP-BANG)</h2>
+                            <p class="helper-text">STOP-BANG is a quick screen for sleep apnea. Answer what you can.</p>
+                            <div class="question-grid">
+                                <div class="question-card" role="group" aria-labelledby="sb1Label">
+                                    <p id="sb1Label">Do you snore loudly (louder than talking or heard through a closed door)?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb1Yes" name="sb1" value="yes">
+                                            <label for="sb1Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb1No" name="sb1" value="no">
+                                            <label for="sb1No">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb2Label">
+                                    <p id="sb2Label">Do you often feel tired or sleepy during the day?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb2Yes" name="sb2" value="yes">
+                                            <label for="sb2Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb2No" name="sb2" value="no">
+                                            <label for="sb2No">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb3Label">
+                                    <p id="sb3Label">Has anyone seen you stop breathing during sleep?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb3Yes" name="sb3" value="yes">
+                                            <label for="sb3Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb3No" name="sb3" value="no">
+                                            <label for="sb3No">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb4Label">
+                                    <p id="sb4Label">Do you have high blood pressure or take medicine for it?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb4Yes" name="sb4" value="yes">
+                                            <label for="sb4Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb4No" name="sb4" value="no">
+                                            <label for="sb4No">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb5Label">
+                                    <p id="sb5Label">Is your BMI over 35?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb5Yes" name="sb5" value="yes">
+                                            <label for="sb5Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb5No" name="sb5" value="no">
+                                            <label for="sb5No">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb6Label">
+                                    <p id="sb6Label">Are you older than 50?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb6Yes" name="sb6" value="yes">
+                                            <label for="sb6Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb6No" name="sb6" value="no">
+                                            <label for="sb6No">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb7Label">
+                                    <p id="sb7Label">Is your neck size over 16 inches (40 cm)?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb7Yes" name="sb7" value="yes">
+                                            <label for="sb7Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb7No" name="sb7" value="no">
+                                            <label for="sb7No">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-card" role="group" aria-labelledby="sb8Label">
+                                    <p id="sb8Label">Are you male?</p>
+                                    <div class="radio-group">
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb8Yes" name="sb8" value="yes">
+                                            <label for="sb8Yes">Yes</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="sb8No" name="sb8" value="no">
+                                            <label for="sb8No">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <div class="form-step" data-step-title="Questions for your visit">
+                        <section class="section card" style="--delay: 0ms;">
+                            <h2 class="section-title">Questions for your visit</h2>
+                            <div class="form-group">
+                                <label for="patientQuestions">What are the most important questions you want answered during your visit?</label>
+                                <textarea id="patientQuestions" rows="6" placeholder="Please list your questions here..."></textarea>
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <div class="form-step" data-step-title="Review and confirm">
+                        <section id="reviewSection" class="section card review-card" style="--delay: 0ms;">
+                            <h2 class="section-title">Review and confirm</h2>
+                            <p class="helper-text">Generate your message when ready. You can edit any answers above and generate again.</p>
+                            <div class="result-actions">
+                                <button type="button" class="btn btn-primary" onclick="generateSummary(true)">Generate demo approved messaging message</button>
+                                <button type="button" class="btn btn-ghost" onclick="copyToClipboard(event)">Copy message</button>
+                                <button type="button" class="btn btn-ghost" onclick="downloadPDF()">PDF disabled</button>
+                                <button type="button" class="btn btn-ghost" onclick="resetForm()">Start over</button>
+                            </div>
+                            <div id="reviewMissing" class="review-alert" hidden>
+                                <p>Sections that look incomplete</p>
+                                <ul id="reviewMissingList" class="review-list"></ul>
+                            </div>
+                            <div id="reviewComplete" class="review-complete" hidden>All sections look complete.</div>
+                            <div id="reviewContent" class="result-content review-content" aria-live="polite"></div>
+                        </section>
+
+                    </div>
+                </form>
+
+                <aside class="side-stack" aria-label="approved messaging tools">
+                    <section class="card template-card" aria-labelledby="messagingTemplateTitle">
+                        <div class="template-header">
+                            <div>
+                                <h2 id="messagingTemplateTitle" class="template-title">approved messaging message template</h2>
+                            </div>
+                            <div class="template-actions">
+                                <button type="button" class="btn btn-primary" onclick="copyTemplateToClipboard(event)">Copy template</button>
+                            </div>
+                        </div>
+                        <pre id="messagingTemplate" class="template-content">Subject: Stroke Clinic Pre-Visit Questionnaire
+
+Hello,
+
+To help us prepare for your visit, please reply to this message with the answers below. If a question does not apply, write "Not applicable" or "Unknown."
+
+1) Are you filling this out yourself or as a caregiver for someone else?
+2) Primary care doctor (if you have one):
+3) Medicines and supplements (include dose and how often). If none, write "None":
+4) Home blood pressure in the last week (lowest and highest readings). If you do not check at home, say "I do not check":
+   - Top number (systolic) range:
+   - Bottom number (diastolic) range:
+5) Sleep apnea screening (Yes/No):
+   - Snore loudly?
+   - Feel tired or sleepy during the day?
+   - Anyone seen you stop breathing during sleep?
+   - High blood pressure or on medicine?
+   - BMI over 35?
+   - Older than 50?
+   - Neck size over 16 inches (40 cm)?
+   - Male?
+6) Tobacco (cigarettes, cigars, chewing tobacco, vaping/e-cigarettes):
+   - Do you use tobacco now? If yes, type and amount per day:
+   - Did you use tobacco in the past? If yes, years and packs per day:
+7) Alcohol (beer, wine, liquor):
+   - Do you drink alcohol now? If yes, type, drinks per week, and years:
+   - Did you drink alcohol in the past? If yes, type and how long/how much:
+8) Recreational or non-prescribed drugs (marijuana, cocaine, methamphetamine, opioids not prescribed to you):
+   - Do you use now? If yes, which, how often, and route:
+   - Did you use in the past? If yes, which, how long, and route:
+9) Questions for your visit (most important questions you want answered):
+
+Thank you.</pre>
+                        <p class="helper-text">Tip: Patients can also complete the questionnaire on this page if they prefer.</p>
+                    </section>
+
+                    <section id="resultContainer" class="card result-container">
+                        <div class="result-empty">
+                            <h3 class="result-title">approved messaging message</h3>
+                            <p>Generate a summary to preview and copy your message.</p>
+                        </div>
+                        <div class="result-body">
+                            <h3 class="result-title">approved messaging message ready to copy</h3>
+                            <p class="result-note">Demo output only. For real patients, use the approved approved messaging/Epic workflow.</p>
+                            <div id="resultContent" class="result-content" aria-live="polite"></div>
+                            <div class="result-actions">
+                                <button class="btn btn-primary" type="button" onclick="copyToClipboard(event)">Copy message</button>
+                                <button class="btn btn-ghost" type="button" onclick="downloadPDF()">PDF disabled</button>
+                                <button class="btn btn-ghost" type="button" onclick="resetForm()">Start over</button>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function addMedication() {
+            const addButton = document.getElementById('addMedicationBtn');
+            if (addButton && addButton.disabled) {
+                return;
+            }
+            const container = document.getElementById('medicationsContainer');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'medication-entry';
+            newEntry.innerHTML = `
+                <div class="medication-input">
+                    <input type="text" class="med-name" placeholder="Medicine name (example: atorvastatin)">
+                    <input type="text" class="med-dose" placeholder="Dose (example: 40 mg once daily)">
+                </div>
+                <button type="button" class="btn btn-remove btn-small" onclick="this.parentElement.remove()">Remove</button>
+            `;
+            container.appendChild(newEntry);
+        }
+
+        function getMedicationStatus() {
+            const medNone = document.getElementById('medNone');
+            if (medNone?.checked) {
+                return 'none';
+            }
+            return 'list';
+        }
+
+        function updateMedicationStatus(changed) {
+            const medNone = document.getElementById('medNone');
+            if (!medNone) {
+                return;
+            }
+
+            const status = getMedicationStatus();
+            const disable = status === 'none';
+            const addButton = document.getElementById('addMedicationBtn');
+            const entries = document.querySelectorAll('.medication-entry');
+
+            entries.forEach(entry => {
+                entry.querySelectorAll('input').forEach(input => {
+                    input.disabled = disable;
+                    if (disable) {
+                        input.value = '';
+                    }
+                });
+            });
+
+            if (disable && entries.length > 1) {
+                for (let i = entries.length - 1; i > 0; i -= 1) {
+                    entries[i].remove();
+                }
+            }
+
+            if (addButton) {
+                addButton.disabled = disable;
+            }
+        }
+
+        function getBpStatus() {
+            const bpNoCheck = document.getElementById('bpNoCheck');
+            if (bpNoCheck?.checked) {
+                return 'noCheck';
+            }
+            return 'list';
+        }
+
+        function updateBpStatus(changed) {
+            const bpNoCheck = document.getElementById('bpNoCheck');
+            if (!bpNoCheck) {
+                return;
+            }
+
+            const status = getBpStatus();
+            const disable = status === 'noCheck';
+            const bpInputs = [
+                document.getElementById('bpSystolicMin'),
+                document.getElementById('bpSystolicMax'),
+                document.getElementById('bpDiastolicMin'),
+                document.getElementById('bpDiastolicMax')
+            ];
+
+            bpInputs.forEach(input => {
+                if (!input) {
+                    return;
+                }
+                input.disabled = disable;
+                if (disable) {
+                    input.value = '';
+                }
+            });
+        }
+
+        function toggleConditional(fieldId, show) {
+            const field = document.getElementById(fieldId);
+            if (show) {
+                field.classList.add('active');
+            } else {
+                field.classList.remove('active');
+            }
+        }
+
+        function calculatePackYears() {
+            const years = parseFloat(document.getElementById('tobaccoPriorYears').value) || 0;
+            const packs = parseFloat(document.getElementById('tobaccoPriorPacks').value) || 0;
+            const packYears = years * packs;
+
+            const display = document.getElementById('packYearsDisplay');
+            if (packYears > 0) {
+                display.style.display = 'block';
+                display.textContent = `Estimated pack-years: ${packYears.toFixed(1)}`;
+            } else {
+                display.style.display = 'none';
+            }
+        }
+
+        function scrollToReview() {
+            document.getElementById('reviewSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function applyToggleClass(toggleId, className) {
+            const toggle = document.getElementById(toggleId);
+            if (!toggle) {
+                return;
+            }
+
+            const apply = () => {
+                document.body.classList.toggle(className, toggle.checked);
+            };
+
+            toggle.addEventListener('change', apply);
+            apply();
+        }
+
+        function setupPreferenceToggles() {
+            applyToggleClass('largeTextToggle', 'large-text');
+            applyToggleClass('highContrastToggle', 'high-contrast');
+        }
+
+        function resolveSubstanceSummary(current, prior, currentSummary, priorSummary) {
+            if (current === 'yes') {
+                return currentSummary();
+            }
+
+            if (prior === 'yes') {
+                return priorSummary();
+            }
+
+            if (current === 'no' && prior === 'no') {
+                return 'No';
+            }
+
+            if (current === 'no' && !prior) {
+                return 'No current use';
+            }
+
+            if (!current && prior === 'no') {
+                return 'No';
+            }
+
+            return 'Not provided';
+        }
+
+        function buildTobaccoSummary() {
+            const tobaccoCurrent = document.querySelector('input[name="tobaccoCurrent"]:checked')?.value;
+            const tobaccoPrior = document.querySelector('input[name="tobaccoPrior"]:checked')?.value;
+
+            return resolveSubstanceSummary(
+                tobaccoCurrent,
+                tobaccoPrior,
+                () => {
+                    const type = document.getElementById('tobaccoType').value.trim();
+                    const amount = document.getElementById('tobaccoAmount').value.trim();
+                    let summary = 'Current use';
+                    if (type) summary += `, ${type}`;
+                    if (amount) summary += `, ${amount}`;
+                    return summary;
+                },
+                () => {
+                    const years = document.getElementById('tobaccoPriorYears').value;
+                    const packs = document.getElementById('tobaccoPriorPacks').value;
+                    const packYears = years && packs ? (parseFloat(years) * parseFloat(packs)).toFixed(1) : null;
+                    let summary = 'Former use';
+                    if (packYears) summary += `, ${packYears} pack-years`;
+                    return summary;
+                }
+            );
+        }
+
+        function buildAlcoholSummary() {
+            const alcoholCurrent = document.querySelector('input[name="alcoholCurrent"]:checked')?.value;
+            const alcoholPrior = document.querySelector('input[name="alcoholPrior"]:checked')?.value;
+
+            return resolveSubstanceSummary(
+                alcoholCurrent,
+                alcoholPrior,
+                () => {
+                    const type = document.getElementById('alcoholType').value.trim();
+                    const drinks = document.getElementById('alcoholDrinks').value;
+                    const years = document.getElementById('alcoholYears').value;
+                    let summary = 'Current use';
+                    if (type) summary += `, ${type}`;
+                    if (drinks) summary += `, ${drinks} drinks/week`;
+                    if (years) summary += `, ${years} years`;
+                    return summary;
+                },
+                () => {
+                    const type = document.getElementById('alcoholPriorType').value.trim();
+                    const duration = document.getElementById('alcoholPriorDuration').value.trim();
+                    let summary = 'Former use';
+                    if (type) summary += `, ${type}`;
+                    if (duration) summary += `, ${duration}`;
+                    return summary;
+                }
+            );
+        }
+
+        function buildDrugSummary() {
+            const drugCurrent = document.querySelector('input[name="drugCurrent"]:checked')?.value;
+            const drugPrior = document.querySelector('input[name="drugPrior"]:checked')?.value;
+
+            return resolveSubstanceSummary(
+                drugCurrent,
+                drugPrior,
+                () => {
+                    const type = document.getElementById('drugCurrentType').value.trim();
+                    const freq = document.getElementById('drugCurrentFreq').value.trim();
+                    const route = document.getElementById('drugCurrentRoute').value.trim();
+                    let summary = 'Current use';
+                    if (type) summary += `, ${type}`;
+                    if (freq) summary += `, ${freq}`;
+                    if (route) summary += `, ${route}`;
+                    return summary;
+                },
+                () => {
+                    const type = document.getElementById('drugPriorType').value.trim();
+                    const duration = document.getElementById('drugPriorDuration').value.trim();
+                    const route = document.getElementById('drugPriorRoute').value.trim();
+                    let summary = 'Former use';
+                    if (type) summary += `, ${type}`;
+                    if (duration) summary += `, ${duration}`;
+                    if (route) summary += `, ${route}`;
+                    return summary;
+                }
+            );
+        }
+
+        function collectMissingSections() {
+            const missing = [];
+            const medStatus = getMedicationStatus();
+            const medInputs = Array.from(document.querySelectorAll('.medication-entry input'));
+            const hasMedValue = medInputs.some(input => input.value.trim());
+            if (!hasMedValue && medStatus === 'list') {
+                missing.push('Medicines and supplements');
+            }
+
+            const bpStatus = getBpStatus();
+            const bpValues = [
+                document.getElementById('bpSystolicMin')?.value,
+                document.getElementById('bpSystolicMax')?.value,
+                document.getElementById('bpDiastolicMin')?.value,
+                document.getElementById('bpDiastolicMax')?.value
+            ].some(value => value && value.trim());
+            if (!bpValues && bpStatus === 'list') {
+                missing.push('Home blood pressure');
+            }
+
+            const substanceAnswered = [
+                'tobaccoCurrent',
+                'tobaccoPrior',
+                'alcoholCurrent',
+                'alcoholPrior',
+                'drugCurrent',
+                'drugPrior'
+            ].some(name => document.querySelector(`input[name="${name}"]:checked`));
+            if (!substanceAnswered) {
+                missing.push('Substance use');
+            }
+
+            const stopbangAnswered = ['sb1', 'sb2', 'sb3', 'sb4', 'sb5', 'sb6', 'sb7', 'sb8']
+                .some(name => document.querySelector(`input[name="${name}"]:checked`));
+            if (!stopbangAnswered) {
+                missing.push('Sleep apnea screening');
+            }
+
+            const questions = document.getElementById('patientQuestions').value.trim();
+            if (!questions) {
+                missing.push('Questions for your visit (left blank)');
+            }
+
+            return missing;
+        }
+
+        function updateReviewPanel(summary) {
+            const reviewContent = document.getElementById('reviewContent');
+            if (reviewContent) {
+                reviewContent.textContent = summary;
+            }
+
+            const missing = collectMissingSections();
+            const missingWrap = document.getElementById('reviewMissing');
+            const completeWrap = document.getElementById('reviewComplete');
+            const missingList = document.getElementById('reviewMissingList');
+
+            if (missingList) {
+                missingList.innerHTML = '';
+                missing.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    missingList.appendChild(li);
+                });
+            }
+
+            if (missingWrap && completeWrap) {
+                if (missing.length) {
+                    missingWrap.hidden = false;
+                    completeWrap.hidden = true;
+                } else {
+                    missingWrap.hidden = true;
+                    completeWrap.hidden = false;
+                }
+            }
+        }
+
+        function generateSummary(goToReview = false) {
+            const lines = [];
+            const caregiverMode = document.getElementById('caregiverMode')?.checked;
+
+            lines.push('Subject: Stroke Clinic Pre-Visit Questionnaire');
+            lines.push('');
+            lines.push('Hello Stroke Clinic team,');
+            lines.push('');
+            if (caregiverMode) {
+                lines.push('I am filling this out as a caregiver.');
+                lines.push('');
+            }
+            lines.push('Here is the pre-visit questionnaire information:');
+            lines.push('');
+
+            const pcp = document.getElementById('pcpName').value.trim();
+            lines.push(`Primary care doctor: ${pcp || 'None'}`);
+            lines.push('');
+
+            const medEntries = document.querySelectorAll('.medication-entry');
+            const meds = [];
+            medEntries.forEach(entry => {
+                const name = entry.querySelector('.med-name').value.trim();
+                const dose = entry.querySelector('.med-dose').value.trim();
+                if (name && dose) {
+                    meds.push(`${name} ${dose}`);
+                } else if (name) {
+                    meds.push(name);
+                }
+            });
+
+            const medStatus = getMedicationStatus();
+            lines.push('Medicines and supplements:');
+            if (medStatus === 'none') {
+                lines.push('- None');
+            } else if (meds.length > 0) {
+                meds.forEach(item => lines.push(`- ${item}`));
+            } else {
+                lines.push('- Not provided');
+            }
+            lines.push('');
+
+            const bpSysMin = document.getElementById('bpSystolicMin').value;
+            const bpSysMax = document.getElementById('bpSystolicMax').value;
+            const bpDiaMin = document.getElementById('bpDiastolicMin').value;
+            const bpDiaMax = document.getElementById('bpDiastolicMax').value;
+
+            const bpStatus = getBpStatus();
+            let bpLine = 'Home blood pressure (last week): ';
+            if (bpStatus === 'noCheck') {
+                bpLine += 'I do not check at home';
+            } else if (bpSysMin && bpSysMax && bpDiaMin && bpDiaMax) {
+                bpLine += `${bpSysMin}-${bpSysMax} / ${bpDiaMin}-${bpDiaMax} mmHg`;
+            } else if (bpSysMin && bpDiaMin) {
+                bpLine += `${bpSysMin} / ${bpDiaMin} mmHg`;
+            } else {
+                bpLine += 'Not provided';
+            }
+            lines.push(bpLine);
+            lines.push('');
+
+            lines.push(`Tobacco use: ${buildTobaccoSummary()}`);
+            lines.push(`Alcohol use: ${buildAlcoholSummary()}`);
+            lines.push(`Recreational/non-prescribed drugs: ${buildDrugSummary()}`);
+            lines.push('');
+
+            const stopbangQuestions = [
+                { name: 'sb1', label: 'Snoring' },
+                { name: 'sb2', label: 'Tired' },
+                { name: 'sb3', label: 'Observed' },
+                { name: 'sb4', label: 'Pressure' },
+                { name: 'sb5', label: 'BMI' },
+                { name: 'sb6', label: 'Age' },
+                { name: 'sb7', label: 'Neck' },
+                { name: 'sb8', label: 'Male' }
+            ];
+            const stopbangYes = [];
+            let stopbangAnswered = 0;
+
+            stopbangQuestions.forEach(question => {
+                const value = document.querySelector(`input[name="${question.name}"]:checked`)?.value;
+                if (value) {
+                    stopbangAnswered += 1;
+                }
+                if (value === 'yes') {
+                    stopbangYes.push(question.label);
+                }
+            });
+
+            if (stopbangAnswered === 0) {
+                lines.push('Sleep apnea screen (STOP-BANG): Not provided');
+            } else {
+                const stopbangScore = stopbangYes.length;
+                let osaLine = `Sleep apnea screen (STOP-BANG): ${stopbangScore}/8`;
+                if (stopbangYes.length) {
+                    osaLine += ` (Yes: ${stopbangYes.join(', ')})`;
+                }
+                lines.push(osaLine);
+            }
+            lines.push('');
+
+            const questions = document.getElementById('patientQuestions').value.trim();
+            lines.push('Questions for provider:');
+            lines.push(questions || 'None');
+
+            const summary = lines.join('\n');
+            const resultContainer = document.getElementById('resultContainer');
+            document.getElementById('resultContent').textContent = summary;
+            resultContainer.classList.add('active');
+            updateReviewPanel(summary);
+
+            if (goToReview) {
+                scrollToReview();
+            }
+        }
+
+        function getSummaryContent() {
+            const primaryContent = document.getElementById('resultContent')?.textContent || '';
+            const reviewContent = document.getElementById('reviewContent')?.textContent || '';
+            return primaryContent.trim() ? primaryContent : reviewContent;
+        }
+
+        function copyToClipboard(event) {
+            const content = getSummaryContent();
+            if (!content.trim()) {
+                alert('Please generate a summary first.');
+                return;
+            }
+            navigator.clipboard.writeText(content).then(() => {
+                const btn = event?.target;
+                if (!btn) {
+                    return;
+                }
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.background = '#1a7f5a';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(() => {
+                alert('Failed to copy to clipboard. Please copy manually.');
+            });
+        }
+
+        function copyTemplateToClipboard(event) {
+            const template = document.getElementById('messagingTemplate');
+            const content = template?.textContent || '';
+            if (!content.trim()) {
+                alert('Template content is missing.');
+                return;
+            }
+            navigator.clipboard.writeText(content).then(() => {
+                const btn = event?.target;
+                if (!btn) {
+                    return;
+                }
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.background = '#1a7f5a';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(() => {
+                alert('Failed to copy template. Please copy manually.');
+            });
+        }
+
+        function downloadPDF() {
+            alert('PDF export is disabled in the public demo because it can create patient-identifiable documents on unmanaged devices. Use approved messaging/Epic or another approved workflow for real patient intake.');
+        }
+
+        function resetForm() {
+            document.getElementById('questionnaireForm').reset();
+            document.getElementById('resultContainer').classList.remove('active');
+            document.getElementById('resultContent').textContent = '';
+            document.getElementById('reviewContent').textContent = '';
+            document.body.classList.remove('large-text', 'high-contrast');
+            document.querySelectorAll('.conditional-fields').forEach(field => {
+                field.classList.remove('active');
+            });
+            document.getElementById('packYearsDisplay').style.display = 'none';
+
+            const container = document.getElementById('medicationsContainer');
+            const entries = container.querySelectorAll('.medication-entry');
+            for (let i = 1; i < entries.length; i++) {
+                entries[i].remove();
+            }
+
+            const missingWrap = document.getElementById('reviewMissing');
+            const completeWrap = document.getElementById('reviewComplete');
+            const missingList = document.getElementById('reviewMissingList');
+            if (missingWrap) {
+                missingWrap.hidden = true;
+            }
+            if (completeWrap) {
+                completeWrap.hidden = true;
+            }
+            if (missingList) {
+                missingList.innerHTML = '';
+            }
+
+            updateMedicationStatus();
+            updateBpStatus();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        setupPreferenceToggles();
+        updateMedicationStatus();
+        updateBpStatus();
+    </script></body>
+</html>
