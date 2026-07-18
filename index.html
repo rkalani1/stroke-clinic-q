@@ -506,6 +506,16 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+            /* reset <fieldset> defaults so the grouping is invisible visually */
+            border: 0;
+            margin: 0;
+            padding: 0;
+            min-inline-size: 0;
+        }
+
+        .bp-group legend {
+            padding: 0;
+            font-weight: 600;
         }
 
         .bp-row {
@@ -918,22 +928,22 @@
                         <section class="section card" style="--delay: 0ms;">
                             <h2 class="section-title">Home blood pressure in the last week</h2>
                             <div class="bp-inputs">
-                                <div class="bp-group">
-                                    <label>Top number (systolic)</label>
+                                <fieldset class="bp-group">
+                                    <legend>Top number (systolic)</legend>
                                     <div class="bp-row">
                                         <input type="number" id="bpSystolicMin" aria-label="Lowest systolic blood pressure" placeholder="Lowest" min="60" max="250">
                                         <span class="bp-separator">to</span>
                                         <input type="number" id="bpSystolicMax" aria-label="Highest systolic blood pressure" placeholder="Highest" min="60" max="250">
                                     </div>
-                                </div>
-                                <div class="bp-group">
-                                    <label>Bottom number (diastolic)</label>
+                                </fieldset>
+                                <fieldset class="bp-group">
+                                    <legend>Bottom number (diastolic)</legend>
                                     <div class="bp-row">
                                         <input type="number" id="bpDiastolicMin" aria-label="Lowest diastolic blood pressure" placeholder="Lowest" min="40" max="150">
                                         <span class="bp-separator">to</span>
                                         <input type="number" id="bpDiastolicMax" aria-label="Highest diastolic blood pressure" placeholder="Highest" min="40" max="150">
                                     </div>
-                                </div>
+                                </fieldset>
                             </div>
                             <p class="helper-text">Top number is systolic, bottom number is diastolic. If you check at home, enter the lowest and highest readings you saw.</p>
                             <div class="choice-list">
