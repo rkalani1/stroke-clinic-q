@@ -888,7 +888,7 @@
                             <h2 class="section-title">Primary care</h2>
                             <div class="form-group">
                                 <label for="pcpName">Primary care doctor (if you have one)</label>
-                                <input type="text" id="pcpName" placeholder="Dr. Jane Smith">
+                                <input type="text" id="pcpName" aria-label="Primary care physician name" placeholder="Dr. Jane Smith">
                             </div>
                         </section>
 
@@ -897,8 +897,8 @@
                             <div id="medicationsContainer">
                                 <div class="medication-entry">
                                     <div class="medication-input">
-                                        <input type="text" class="med-name" placeholder="Medicine name (example: atorvastatin)">
-                                        <input type="text" class="med-dose" placeholder="Dose (example: 40 mg once daily)">
+                                        <input type="text" class="med-name" aria-label="Medicine name" placeholder="Medicine name (example: atorvastatin)">
+                                        <input type="text" class="med-dose" aria-label="Medicine dose" placeholder="Dose (example: 40 mg once daily)">
                                     </div>
                                 </div>
                             </div>
@@ -921,17 +921,17 @@
                                 <div class="bp-group">
                                     <label>Top number (systolic)</label>
                                     <div class="bp-row">
-                                        <input type="number" id="bpSystolicMin" placeholder="Lowest" min="60" max="250">
+                                        <input type="number" id="bpSystolicMin" aria-label="Lowest systolic blood pressure" placeholder="Lowest" min="60" max="250">
                                         <span class="bp-separator">to</span>
-                                        <input type="number" id="bpSystolicMax" placeholder="Highest" min="60" max="250">
+                                        <input type="number" id="bpSystolicMax" aria-label="Highest systolic blood pressure" placeholder="Highest" min="60" max="250">
                                     </div>
                                 </div>
                                 <div class="bp-group">
                                     <label>Bottom number (diastolic)</label>
                                     <div class="bp-row">
-                                        <input type="number" id="bpDiastolicMin" placeholder="Lowest" min="40" max="150">
+                                        <input type="number" id="bpDiastolicMin" aria-label="Lowest diastolic blood pressure" placeholder="Lowest" min="40" max="150">
                                         <span class="bp-separator">to</span>
-                                        <input type="number" id="bpDiastolicMax" placeholder="Highest" min="40" max="150">
+                                        <input type="number" id="bpDiastolicMax" aria-label="Highest diastolic blood pressure" placeholder="Highest" min="40" max="150">
                                     </div>
                                 </div>
                             </div>
@@ -1320,7 +1320,7 @@ Thank you.</pre>
                         </div>
                         <div class="result-body">
                             <h3 class="result-title">approved messaging message ready to copy</h3>
-                            <p class="result-note">Demo output only. For real patients, use the approved approved messaging/Epic workflow.</p>
+                            <p class="result-note">Demo output only. For real patients, use the approved messaging/Epic workflow.</p>
                             <div id="resultContent" class="result-content" aria-live="polite"></div>
                             <div class="result-actions">
                                 <button class="btn btn-primary" type="button" onclick="copyToClipboard(event)">Copy message</button>
@@ -1345,8 +1345,8 @@ Thank you.</pre>
             newEntry.className = 'medication-entry';
             newEntry.innerHTML = `
                 <div class="medication-input">
-                    <input type="text" class="med-name" placeholder="Medicine name (example: atorvastatin)">
-                    <input type="text" class="med-dose" placeholder="Dose (example: 40 mg once daily)">
+                    <input type="text" class="med-name" aria-label="Medicine name" placeholder="Medicine name (example: atorvastatin)">
+                    <input type="text" class="med-dose" aria-label="Medicine dose" placeholder="Dose (example: 40 mg once daily)">
                 </div>
                 <button type="button" class="btn btn-remove btn-small" onclick="this.parentElement.remove()">Remove</button>
             `;
