@@ -21,3 +21,7 @@ Allowed public content:
 Deployment rule: real clinical, patient-facing, trainee-record, research-participant, or internal-planning use must move to an approved controlled environment with access control, approved storage, security review, incident-response path, and owner governance.
 
 Review cadence: review before every public Pages deployment and after any change that adds forms, uploads, local storage, exports, contact workflows, clinical recommendations, study recruitment language, or organizational branding.
+
+## AI-Assisted Update Gate
+
+Use `docs/automedbench-lite.md` before accepting AI-generated changes to question text, answer logic, clinical references, disclaimers, or public-demo UI copy. The gate requires S1 Plan, S2 Setup, S3 Validate, S4 Execute, and S5 Submit with source trace, manual page checks, residual clinical review need, and no-PHI confirmation.
